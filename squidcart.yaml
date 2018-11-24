@@ -1,0 +1,4 @@
+enabled: true
+mode: 'test'
+limit: 100
+expiration: 3600

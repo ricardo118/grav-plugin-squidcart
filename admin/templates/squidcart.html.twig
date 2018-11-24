@@ -1,0 +1,78 @@
+{% extends 'partials/base.html.twig' %}
+{% do assets.addCss('https://unpkg.com/purecss@1.0.0/build/base-min.css', 10) %}
+{% do assets.addCss('https://unpkg.com/purecss@1.0.0/build/grids-min.css',10) %}
+{% do assets.addCss('https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css',10) %}
+
+
+{% set title = "PLUGIN_ADMIN.DASHBOARD"|tu %}
+{% set slug = uri.basename|e %}
+{% set body_classes = 'squidcart' %}
+{% set storedValue = get_cookie('grav-tabs-state')|default('{}')|json_decode %}
+{% set storedTab = attribute(storedValue, 'tab-content.options.advanced') %}
+
+{% block titlebar %}
+    <div class="button-bar">
+        <a href="{{ config.plugins['client-portal'].portal }}" target="_blank" class="button">{{ "PLUGIN_SQUIDCART.STRIPE_LINK"|tu }}</a>
+    </div>
+    <div>
+        <i class="fa fa-fw fa-4x fa-cc-stripe"></i><h1 class="title">{{ "PLUGIN_SQUIDCART.SQUIDCART"|tu }}</h1>
+        <div class="mode-container">
+            <div class="mode-banner {{ squidcart.mode }}">
+                <div class="mode-content {{ squidcart.mode }}"><span>{{ squidcart.mode|upper }} DATA</span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content_top %}
+    <div class="form-tabs">
+        <div class="tabs-nav">
+            <a class="tab__link {{ storedTab is same as('data.dashboard') ? 'active' }}" data-tabid="tab-content.options.advanced1" data-tabkey="tab-content.options.advanced" data-scope="data.dashboard">
+                <span>{{ "PLUGIN_SQUIDCART.DASHBOARD"|tu }}</span>
+            </a>
+            <a class="tab__link {{ storedTab is same as('data.orders') ? 'active' }}" data-tabid="tab-content.options.advanced2" data-tabkey="tab-content.options.advanced" data-scope="data.orders">
+                <span>{{ "PLUGIN_SQUIDCART.ORDERS"|tu }}</span>
+            </a>
+            <a class="tab__link {{ storedTab is same as('data.products') ? 'active' }}" data-tabid="tab-content.options.advanced3" data-tabkey="tab-content.options.advanced" data-scope="data.products">
+                <span>{{ "PLUGIN_SQUIDCART.PRODUCTS"|tu }}</span>
+            </a>
+            <a class="tab__link {{ storedTab is same as('data.customers') ? 'active' }}" data-tabid="tab-content.options.advanced4" data-tabkey="tab-content.options.advanced" data-scope="data.customers">
+                <span>{{ "PLUGIN_SQUIDCART.CUSTOMERS"|tu }}</span>
+            </a>
+        </div>
+{% endblock %}
+
+{% block content %}
+    <div class="tabs-content">
+        <div id="tab-content.options.advanced1" class="tab__content  {{ storedTab is same as('data.dashboard') ? 'active' }}">
+            <div class="form-tab">
+                {% include "partials/dashboard.html.twig" %}
+            </div>
+        </div>
+        <div id="tab-content.options.advanced2" class="tab__content {{ storedTab is same as('data.orders') ? 'active' }}">
+            <div class="form-tab">
+                {% include "partials/orders.html.twig" %}
+            </div>
+        </div>
+        <div id="tab-content.options.advanced3" class="tab__content {{ storedTab is same as('data.products') ? 'active' }}">
+            <div class="form-tab">
+                {% set product = uri.params('product')|split(':')|last %}
+                {% if product %}
+                    {% include "partials/product.html.twig" with {id: product} %}
+                {% else %}
+                    {% include "partials/products.html.twig" %}
+                {% endif %}
+            </div>
+        </div>
+        <div id="tab-content.options.advanced4" class="tab__content {{ storedTab is same as('data.customers') ? 'active' }}">
+            <div class="form-tab">
+                {% include "partials/customers.html.twig" %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content_bottom %}{% endblock %}

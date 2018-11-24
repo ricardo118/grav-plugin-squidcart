@@ -1,0 +1,23 @@
+{% extends 'partials/base.html.twig' %}
+
+{% block content %}
+    <div class="container subscriptions" id="cards">
+        <div class="columns">
+            {% for service in services %}
+                {{ dump(service) }}
+                <div class="column col-4 mb-2 mt-2 col-md-6 col-xs-12">
+                    <div class="subscription">
+                        <div class="subscription-title">
+                        </div>
+                        <div class="subscription-body">
+                            <h2>{{ service.name }}</h2>
+                        </div>
+                        <div class="subscription-footer">
+                            <a href="" class="btn" data-id="">Subscribe</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

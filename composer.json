@@ -1,0 +1,14 @@
+{
+  "name": "ricardo118/grav-plugin-stripe",
+  "description": "Stripe Plugin",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ricardo Verdugo",
+      "email": "ricardo@urbansquid.london"
+    }
+  ],
+  "require": {
+    "stripe/stripe-php": "v6.19.3"
+  }
+}

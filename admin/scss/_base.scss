@@ -1,0 +1,62 @@
+.squidcart {
+  #admin-main {
+
+    #titlebar {
+      .mode-container {
+        position: relative;
+        .mode-banner {
+          position: absolute;
+          left: 0;
+          right: 0;
+          z-index: 5;
+          text-align: center;
+          line-height: 0;
+          pointer-events: none;
+          top: -14px;
+          &.test {
+            border-bottom: 1px solid #f5925e;
+          }
+          &.live {
+            border-bottom: 1px solid #0090d9;
+          }
+          .mode-content {
+            position: relative;
+            box-sizing: border-box;
+            display: inline-block;
+            height: 14px;
+            padding: 2px 8px;
+            color: #fff;
+            font-size: 10px;
+            line-height: 10px;
+            border-radius: 4px 4px 0 0;
+            &.test {
+              background-color: #f5925e;
+            }
+            &.live {
+              background-color: #0090d9;
+            }
+          }
+        }
+      }
+    }
+    .admin-block {
+      padding-top: 0;
+    }
+      .title {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 35px;
+      }
+
+      .tabs-content {
+        .tab__content {
+          padding-top: 0;
+        }
+        .form-tab {
+          //padding-left: 1.5rem;
+        }
+      }
+
+
+  }
+}

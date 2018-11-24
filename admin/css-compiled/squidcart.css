@@ -1,0 +1,104 @@
+.squidcart #admin-main #titlebar .mode-container {
+  position: relative; }
+  .squidcart #admin-main #titlebar .mode-container .mode-banner {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    text-align: center;
+    line-height: 0;
+    pointer-events: none;
+    top: -14px; }
+    .squidcart #admin-main #titlebar .mode-container .mode-banner.test {
+      border-bottom: 1px solid #f5925e; }
+    .squidcart #admin-main #titlebar .mode-container .mode-banner.live {
+      border-bottom: 1px solid #0090d9; }
+    .squidcart #admin-main #titlebar .mode-container .mode-banner .mode-content {
+      position: relative;
+      box-sizing: border-box;
+      display: inline-block;
+      height: 14px;
+      padding: 2px 8px;
+      color: #fff;
+      font-size: 10px;
+      line-height: 10px;
+      border-radius: 4px 4px 0 0; }
+      .squidcart #admin-main #titlebar .mode-container .mode-banner .mode-content.test {
+        background-color: #f5925e; }
+      .squidcart #admin-main #titlebar .mode-container .mode-banner .mode-content.live {
+        background-color: #0090d9; }
+.squidcart #admin-main .admin-block {
+  padding-top: 0; }
+.squidcart #admin-main .title {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 35px; }
+.squidcart #admin-main .tabs-content .tab__content {
+  padding-top: 0; }
+
+.squidcart #admin-main table thead {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  background-color: #414147;
+  color: #ffffff; }
+  .squidcart #admin-main table thead tr td {
+    padding: 8px; }
+    .squidcart #admin-main table thead tr td.expandable {
+      flex-basis: 30.5px; }
+.squidcart #admin-main table tbody tr td {
+  padding: 8px; }
+  .squidcart #admin-main table tbody tr td.bold {
+    font-weight: bold; }
+  .squidcart #admin-main table tbody tr td.expandable {
+    cursor: pointer; }
+  .squidcart #admin-main table tbody tr td.details {
+    flex: auto;
+    width: 100%;
+    padding: 0;
+    background: #ffffff; }
+    .squidcart #admin-main table tbody tr td.details .details-wrapper {
+      display: none;
+      padding: 8px; }
+      .squidcart #admin-main table tbody tr td.details .details-wrapper .details-section {
+        padding-bottom: 15px;
+        font-size: 13px; }
+        .squidcart #admin-main table tbody tr td.details .details-wrapper .details-section .details-container {
+          line-height: 13px;
+          overflow: auto;
+          position: relative;
+          border: 1px solid #e3e3e3;
+          background: #ffffff;
+          margin-top: 8px; }
+          .squidcart #admin-main table tbody tr td.details .details-wrapper .details-section .details-container table thead tr:hover {
+            background-color: #414147; }
+          .squidcart #admin-main table tbody tr td.details .details-wrapper .details-section .details-container .section-define-left {
+            float: left;
+            width: 50%; }
+          .squidcart #admin-main table tbody tr td.details .details-wrapper .details-section .details-container .section-define-right {
+            float: right;
+            width: 50%; }
+          .squidcart #admin-main table tbody tr td.details .details-wrapper .details-section .details-container dt {
+            display: block;
+            float: left;
+            padding: 0 15px 0 13px;
+            line-height: 22px; }
+          .squidcart #admin-main table tbody tr td.details .details-wrapper .details-section .details-container dd {
+            color: #000000;
+            min-height: 22px;
+            line-height: 22px;
+            word-wrap: break-word;
+            overflow: hidden; }
+.squidcart #admin-main table tbody tr:hover {
+  background-color: #e3e3e3; }
+.squidcart .badge.canceled {
+  background-color: #FF4136; }
+
+#products .product-wrapper .product-details .product-title {
+  border-bottom: 0;
+  padding: 0;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 17px; }
+
+/*# sourceMappingURL=squidcart.css.map */

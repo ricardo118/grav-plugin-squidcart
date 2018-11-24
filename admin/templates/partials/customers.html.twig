@@ -1,0 +1,21 @@
+<div class="content-padding">
+<table>
+    <thead>
+        <tr>
+            <td>{{ 'PLUGIN_SQUIDCART.CUSTOMER'|t|upper }}</td>
+            {#<td>CARD</td>#}
+            <td class="right">{{ 'PLUGIN_SQUIDCART.CREATED'|t|upper }}</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for customer in customers %}
+            {% set card = customer.sources.data|first %}
+            <tr>
+                <td>{{ customer.email }} — {{ customer.id }}</td>
+                {#<td class="card-row">{{ card.name ?: card.brand ~ ' – ' ~ card.last4 ~ ' – ' ~ card.exp_month ~ ' / ' ~ card.exp_year }}</td>#}
+                <td class="right">{{ customer.created|date('Y/m/d H:i') }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>

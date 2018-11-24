@@ -1,0 +1,14 @@
+<div class="pure-g" id="products">
+    {% for product in products %}
+        <div class="pure-u-1-3 content-padding">
+            <div class="product-wrapper">
+                <a href="{{ uri.path }}/product:{{ product.id }}">
+                    <img src="{{ product.images|first }}"/>
+                    <div class="product-details">
+                        <h1 class="product-title">{{ product.name }}</h1>
+                    </div>
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,27 @@
+name: SquidCart
+version: 0.1.0
+description: SquidCart is a complete eCommerce solution based on Stripe
+icon: plug
+author:
+  name: Ricardo
+  email: ricardo@urbansquid.london
+homepage: https://github.com/ricardo118/grav-plugin-stripe
+demo: http://demo.yoursite.com
+keywords: grav, plugin, etc
+bugs: https://github.com/ricardo118/grav-plugin-squidcart/issues
+docs: https://github.com/ricardo118/grav-plugin-squidcart/blob/develop/README.md
+license: MIT
+
+form:
+  validation: strict
+  fields:
+    enabled:
+      type: toggle
+      label: Plugin status
+      highlight: 1
+      default: 0
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool

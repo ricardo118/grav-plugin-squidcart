@@ -1,0 +1,76 @@
+<div class="content-padding">
+    <table>
+        <thead>
+        <tr>
+            <td class="expandable shrink"></td>
+            <td class="center">{{ 'PLUGIN_SQUIDCART.AMOUNT'|tu|upper }}</td>
+            <td class="center">{{ 'PLUGIN_SQUIDCART.STATUS'|tu|upper }}</td>
+            <td class="triple">{{ 'PLUGIN_SQUIDCART.ID'|tu|upper }}</td>
+            <td class="right">{{ 'PLUGIN_SQUIDCART.ITEMS'|tu|upper }}</td>
+            <td class="right">{{ 'PLUGIN_SQUIDCART.DATE'|tu|upper }}</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            {% set card = customer.sources.data|first %}
+            <tr>
+                <td class="expandable shrink"><i class="fa fa-chevron-right"></i></td>
+                <td class="center bold">{{ order.amount|price }}</td>
+                <td class="center"><div class="badge {{ order.status }}">{{ order.status }}</div></td>
+                <td class="triple bold">{{ order.id }}</td>
+                <td class="right">{{ order.items|length-2 }} items</td>
+                <td class="right">{{ order.created|date('Y/m/d H:i') }}</td>
+                <td class="details">
+                    <div class="details-wrapper">
+                        <div class="details-section">
+                            <b>{{ 'PLUGIN_SQUIDCART.ITEMS'|tu }}</b>
+                            <div class="details-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <td class="triple">{{ 'PLUGIN_SQUIDCART.PRODUCT'|tu|upper }}</td>
+                                            <td class="double">{{ 'PLUGIN_SQUIDCART.DESCRIPTION'|tu|upper }}</td>
+                                            <td class="center">{{ 'PLUGIN_SQUIDCART.QUANTITY'|tu|upper }}</td>
+                                            <td class="right">{{ 'PLUGIN_SQUIDCART.PRICE'|tu|upper }}</td>
+                                            <td class="right">{{ 'PLUGIN_SQUIDCART.TOTAL'|tu|upper }}</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in order.items %}
+                                        <tr>
+                                            <td class="triple bold">{{ item.type is same as('sku') ? item.parent }}</td>
+                                            <td class="double">{{ item.description }}</td>
+                                            <td class="center">{{ item.quantity }}</td>
+                                            <td class="right">{{ item.amount|price }}</td>
+                                            <td class="right">{{ (item.quantity * item.amount)|price }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="details-section">
+                            <b>Shipping</b>
+                            <div class="details-container">
+                                <dl class="section-define-left">
+                                    <dt class="recipient">Recipient:</dt>
+                                    <dd class="recipient"></dd>
+                                    <dt>Phone:</dt>
+                                    <dd>+351939202361</dd>
+                                </dl>
+                                <dl class="section-define-right">
+                                    <dt class="address">Address:</dt>
+                                    <dd class="address">
+                                        <strong>Rua Isaac Newton 1A</strong></br>
+                                        Brejos de Azeitao, 2925-628, PT
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

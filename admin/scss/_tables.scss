@@ -1,0 +1,95 @@
+.squidcart {
+  #admin-main {
+    table {
+      thead {
+        padding-top: 2px;
+        padding-bottom: 2px;
+        background-color: $content-header;
+        color: $white;
+        tr {
+          td {
+            padding: 8px;
+            &.expandable {
+              flex-basis:30.5px;
+            }
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          td {
+            padding: 8px;
+
+            &.bold {
+              font-weight: bold;
+            }
+            &.expandable {
+              cursor: pointer;
+            }
+
+            &.details {
+              flex: auto;
+              width: 100%;
+              padding: 0;
+              background: $white;
+
+              .details-wrapper {
+                display:none;
+                padding: 8px;
+
+                .details-section {
+                  padding-bottom: 15px;
+                  font-size: 13px;
+
+                  .details-container {
+                    line-height: 13px;
+                    overflow: auto;
+                    position: relative;
+                    border: 1px solid $content-tabs-bg;
+                    background: $white;
+                    margin-top:8px;
+                    table thead tr:hover {
+                      background-color: #414147;
+                    }
+                    .section-define-left {
+                      float: left;
+                      width: 50%;
+                    }
+                    .section-define-right {
+                      float: right;
+                      width: 50%;
+                    }
+                    dt {
+                      display: block;
+                      float: left;
+                      padding: 0 15px 0 13px;
+                      line-height: 22px;
+                    }
+                    dd {
+                      color: $black;
+                      min-height: 22px;
+                      line-height: 22px;
+                      word-wrap: break-word;
+                      overflow: hidden;
+                    }
+                  }
+                }
+              }
+            }
+
+          }
+          &:hover {
+            background-color: $content-tabs-bg;
+          }
+        }
+      }
+    }
+  }
+
+  .badge {
+    &.canceled {
+      background-color: #FF4136;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+#products {
+  .product-wrapper {
+    .product-details {
+      .product-title {
+        border-bottom: 0;
+        padding: 0;
+        margin: 0;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 17px;
+      }
+    }
+  }
+}
