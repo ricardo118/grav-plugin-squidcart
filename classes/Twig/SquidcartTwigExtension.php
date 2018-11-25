@@ -2,7 +2,6 @@
 namespace Grav\Plugin\Squidcart\Twig;
 
 use Grav\Common\Grav;
-use Grav\Plugin\Squidcart;
 use Grav\Plugin\Squidcart\Products;
 
 class SquidcartTwigExtension extends \Twig_Extension
@@ -57,13 +56,11 @@ class SquidcartTwigExtension extends \Twig_Extension
         return $number; // without symbol
     }
 
-    public function getProduct($id)
+    public function getProduct($id, $skus = false)
     {
         require_once __DIR__ . '/../Products.php';
-        $products = new Products($this->stripe);
-        $product = $products->getProduct([
-            "id" => $id
-        ]);
+        $products = new Products($this->stripe, $this->configs);
+        $product = $products->getProduct($id, $skus);
 
         return $product;
     }

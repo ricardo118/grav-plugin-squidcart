@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ricardo
- * Date: 13/10/2018
- * Time: 22:56
- */
 
 namespace Grav\Plugin\SquidCart;
 
-
+use Grav\Common\Grav;
 use Stripe\Error\Api;
-use Stripe\Plan;
 use Stripe\Product;
+use Stripe\SKU;
 use Stripe\Stripe;
 
 class Products
@@ -22,81 +16,125 @@ class Products
      */
     protected $stripe;
 
+    protected $cache;
+    protected $grav;
+    protected $expiration;
+
     /**
      * @param Stripe $stripe
+     * @param array $configs
      */
-    public function __construct(Stripe $stripe)
+    public function __construct(Stripe $stripe, Array $configs)
     {
+        $this->grav = Grav::instance();
         $this->stripe = $stripe;
+        $this->cache  = $this->grav['cache'];
+        $this->expiration = $configs['expiration'];
     }
 
-    public function getProducts(String $opts)
+    /**
+     * @param array|null $opts
+     * @return array
+     */
+    public function getProducts(Array $opts = null)
     {
         $product = new Product();
-        try {
-            $result = $product->all($opts)->data;
-        } catch (Api $e) {
-            dump($e->getJsonBody());
-        }
+        $data = $this->cache->fetch('squidcart_products');
 
-        return $result;
-    }
-
-    public function filterByType(String $filter)
-    {
-        $result = [];
-
-        foreach ($this->products as $product) {
-            if($product->type === $filter){
-                array_push($result, $product);
+        if(!$data) {
+            try {
+                $products = $product->all($opts);
+                foreach ($products->autoPagingIterator() as $product) {
+                    $data[] = $product;
+                }
+            } catch (Api $e) {
+                dump($e->getJsonBody());
             }
         }
 
-        return $result;
+        $this->cache->save('squidcart_products', $data, $this->expiration);
+        return $data;
     }
 
-    public function getPlans() {
 
-        $plan = new Plan();
-
-        try {
-            $plans = $plan->all()->data;
-            return $plans;
-        } catch (Api $e) { }
-
-    }
-
-    public function matchPlansToProducts($plans, $products)
+    /**
+     * @param String $id
+     * @param bool $getSkus
+     * @return array
+     */
+    public function getProduct(String $id, $getSkus = false)
     {
-        for ($x = 0; $x < count($products); $x++) {
-            $tempPlans = [];
-            foreach ($plans as $plan) {
-                if($plan->product === $products[$x]->id) {
-                    array_push($tempPlans, $plan);
+        $data = $this->getProducts();
+        $product = [];
+        $skus = [];
+
+        foreach ($data as $item)
+        {
+            if ($item['id'] === $id) {
+                $product = $item;
+                if ($getSkus) {
+                    foreach ($this->getSkus() as $sku)
+                    {
+                        if($sku['product'] === $id)
+                        {
+                            array_push($skus, $sku);
+                        }
+                    }
+                    $product['skus'] = $skus;
+                    return $product;
                 }
             }
-            $products[$x]['plans'] = $tempPlans;
         }
-
-        return $products;
+        return $product;
     }
 
-    public static function getSKUByAttribute($skus,$attribute, $value)
+    public function createProduct()
     {
-        $result = [];
-        foreach ($skus as $sku) {
-            if($sku->attributes->$attribute === $value) {
 
-                array_push($result, $sku);
+    }
+
+    public function updateProduct()
+    {
+
+    }
+
+    public function deleteProduct()
+    {
+
+    }
+
+    public function getSkus(Array $opts = null)
+    {
+        $stripe = new SKU();
+        $data = $this->cache->fetch('squidcart_skus');
+
+        if(!$data) {
+            try {
+                $skus = $stripe->all($opts);
+                foreach ($skus->autoPagingIterator() as $sku) {
+                    $data[] = $sku;
+                }
+            } catch (Api $e) {
+                dump($e->getJsonBody());
             }
         }
-        return $result;
+
+        $this->cache->save('squidcart_skus', $data, $this->expiration);
+        return $data;
     }
 
-
-    public function getProduct($opts)
+    public function createSku()
     {
-        $product = new Product();
-        return $product->retrieve($opts);
+
+    }
+
+    public function updateSku()
+    {
+
+    }
+
+    public function deleteSku()
+    {
+
     }
 }

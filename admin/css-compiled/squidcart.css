@@ -35,6 +35,8 @@
   line-height: 35px; }
 .squidcart #admin-main .tabs-content .tab__content {
   padding-top: 0; }
+.squidcart .text-right {
+  text-align: right; }
 
 .squidcart #admin-main table thead {
   padding-top: 2px;
