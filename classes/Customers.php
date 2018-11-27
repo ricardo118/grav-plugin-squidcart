@@ -2,15 +2,13 @@
 
 namespace Grav\Plugin\SquidCart;
 
-
 use Grav\Common\Grav;
+use Stripe\Customer;
 use Stripe\Error\Api;
-use Stripe\Order;
 use Stripe\Stripe;
 
-class Orders
+class Customers
 {
-
     /**
      * @var Stripe
      */
@@ -32,23 +30,23 @@ class Orders
         $this->expiration = $configs['expiration'];
     }
 
-    public function getOrders(Array $opts = null)
+    public function getCustomers(Array $opts = null)
     {
-        $order = new Order();
-        $data = $this->cache->fetch('squidcart_orders');
+        $customer = new Customer();
+        $data = $this->cache->fetch('squidcart_customers');
 
         if(!$data) {
             try {
-                $orders = $order->all($opts);
-                foreach ($orders->autoPagingIterator() as $order) {
-                    $data[] = $order;
+                $customers = $customer->all($opts);
+                foreach ($customers->autoPagingIterator() as $customer) {
+                    $data[] = $customer;
                 }
             } catch (Api $e) {
                 dump($e);
             }
         }
 
-        $this->cache->save('squidcart_orders', $data, $this->expiration);
+        $this->cache->save('squidcart_customers', $data, $this->expiration);
         return $data;
     }
 }

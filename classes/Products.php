@@ -22,9 +22,9 @@ class Products
 
     /**
      * @param Stripe $stripe
-     * @param array $configs
+     * @param $configs
      */
-    public function __construct(Stripe $stripe, Array $configs)
+    public function __construct(Stripe $stripe, $configs)
     {
         $this->grav = Grav::instance();
         $this->stripe = $stripe;

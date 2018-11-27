@@ -3,6 +3,9 @@ namespace Grav\Plugin;
 
 use Grav\Common\Page\Page;
 use Grav\Common\Plugin;
+use Grav\Plugin\SquidCart\Customers;
+use Grav\Plugin\SquidCart\Orders;
+use Grav\Plugin\SquidCart\Products;
 use Grav\Plugin\Squidcart\Squidcart;
 use Grav\Plugin\Squidcart\Twig\SquidcartTwigExtension;
 use Stripe\Stripe;
@@ -23,7 +26,7 @@ class SquidCartPlugin extends Plugin
      */
     protected $stripe;
     /**
-     * @var Array
+     * @var array
      */
     protected $configs;
     protected $keys;
@@ -95,27 +98,22 @@ class SquidCartPlugin extends Plugin
         require_once __DIR__ . '/vendor/autoload.php';
         require_once __DIR__ . '/classes/Squidcart.php';
 
-        $this->initializeStripe();
 
-        // Initialize squidCart class.
-        $this->squidcart = new Squidcart($this->grav, $this->stripe, $this->configs);
+        // Initialize Squidcart class.
+        $this->squidcart = new Squidcart($this->keys);
+        $this->squidcart->init();
+        $this->stripe = $this->squidcart->initializeStripe();
+        $orders = new Orders($this->stripe, $this->configs);
+        $customers = new Customers($this->stripe, $this->configs);
+        $products = new Products($this->stripe, $this->configs);
 
         $twig = $this->grav['twig'];
         $twig->twig_vars['squidcart']['mode'] = $this->configs['mode'];
         $twig->twig_vars['squidcart']['currency'] = $this->configs['currency'];
-        $twig->twig_vars['products'] = $this->squidcart->getProducts();
-        $twig->twig_vars['customers'] = $this->squidcart->getCustomers();
-        $twig->twig_vars['orders'] = $this->squidcart->getOrders();
+        $twig->twig_vars['products'] = $products->getProducts();
+        $twig->twig_vars['customers'] = $customers->getCustomers();
+        $twig->twig_vars['orders'] = $orders->getOrders();
 
-    }
-
-    /**
-     * Initialize the Stripe API and set the API Key Required.
-     */
-    protected function initializeStripe()
-    {
-        $this->stripe = new Stripe();
-        $this->stripe->setApiKey($this->keys['secret']);
     }
 
     /**
