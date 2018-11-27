@@ -13,16 +13,29 @@
         <tbody>
         {% for order in orders %}
             {% set card = customer.sources.data|first %}
-            <tr>
+            <tr>{{ dump(order) }}
                 <td class="expandable shrink"><i class="fa fa-chevron-right"></i></td>
                 <td class="center bold">{{ order.amount|price }}</td>
                 <td class="center"><div class="badge {{ order.status }}">{{ order.status }}</div></td>
-                <td class="triple bold">{{ order.id }}</td>
-                <td class="right">{{ order.items|length-2 }} items</td>
+                <td class="triple bold"><a target="_blank" href="https://dashboard.stripe.com/{{ squidcart.mode }}/orders/{{ order.id }}"><i class="fa fa-external-link"></i> {{ order.id }}</a></td>
+                <td class="right">{{ 'PLUGIN_SQUIDCART.NUM_ITEMS'|tu|format(order.items|length-2) }}</td>
                 <td class="right">{{ order.created|date('Y/m/d H:i') }}</td>
                 <td class="details">
                     <div class="details-wrapper">
                         <div class="details-section">
+                            <div class="details-section">
+                                <b>{{ 'PLUGIN_SQUIDCART.INFO'|tu }}</b>
+                                <div class="details-container">
+                                    <dl class="section-define-left">
+                                        <dt>{{ 'PLUGIN_SQUIDCART.ID'|tu }}</dt>
+                                        <dd>{{ order.id }}</dd>
+                                        <dt>{{ 'PLUGIN_SQUIDCART.CUSTOMER'|tu }}</dt>
+                                        <dd><a href="https://dashboard.stripe.com/{{ squidcart.mode }}/customers/{{ order.customer }}" target="_blank"><i class="fa fa-external-link"></i> {{ order.customer }}</a></dd>
+                                        <dt>{{ 'PLUGIN_SQUIDCART.EMAIL'|tu }}</dt>
+                                        <dd>{{ order.email }}</dd>
+                                    </dl>
+                                </div>
+                            </div>
                             <b>{{ 'PLUGIN_SQUIDCART.ITEMS'|tu }}</b>
                             <div class="details-container">
                                 <table>
@@ -50,19 +63,28 @@
                             </div>
                         </div>
                         <div class="details-section">
-                            <b>Shipping</b>
+                            <b>{{ 'PLUGIN_SQUIDCART.SHIPPING'|tu }}</b>
                             <div class="details-container">
                                 <dl class="section-define-left">
-                                    <dt class="recipient">Recipient:</dt>
-                                    <dd class="recipient"></dd>
-                                    <dt>Phone:</dt>
-                                    <dd>+351939202361</dd>
+                                    <dt>{{ 'PLUGIN_SQUIDCART.RECIPIENT'|tu }}</dt>
+                                    <dd>{{ order.shipping.name }}</dd>
+                                    <dt>{{ 'PLUGIN_SQUIDCART.PHONE'|tu }}</dt>
+                                    <dd>{{ order.shipping.phone }}</dd>
+                                    <dt>{{ 'PLUGIN_SQUIDCART.CARRIER'|tu }}</dt>
+                                    <dd>{{ order.shipping.carrier }}</dd>
+                                    <dt>{{ 'PLUGIN_SQUIDCART.TRACKING_NUMBER'|tu }}</dt>
+                                    <dd>{{ order.shipping.tracking_number }}</dd>
                                 </dl>
                                 <dl class="section-define-right">
-                                    <dt class="address">Address:</dt>
+                                    <dt class="address">{{ 'PLUGIN_SQUIDCART.ADDRESS'|tu }}</dt>
                                     <dd class="address">
-                                        <strong>Rua Isaac Newton 1A</strong></br>
-                                        Brejos de Azeitao, 2925-628, PT
+                                        {% set address = order.shipping.address %}
+                                        <strong>{{ address.line1 }}</strong></br>
+                                        {{ address.line2 }}
+                                        {{ address.city ? address.city ~ ',' }}
+                                        {{ address.postal_code ? address.postal_code ~ ',' }}
+                                        {{ address.state ? address.state ~ ',' }}
+                                        {{ address.country ? address.country }}
                                     </dd>
                                 </dl>
                             </div>

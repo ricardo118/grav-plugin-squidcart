@@ -53,6 +53,11 @@
     font-weight: bold; }
   .squidcart #admin-main table tbody tr td.expandable {
     cursor: pointer; }
+    .squidcart #admin-main table tbody tr td.expandable i {
+      transform: rotate(0);
+      transition: transform .25s ease-in-out; }
+      .squidcart #admin-main table tbody tr td.expandable i.spin {
+        transform: rotate(90deg); }
   .squidcart #admin-main table tbody tr td.details {
     flex: auto;
     width: 100%;

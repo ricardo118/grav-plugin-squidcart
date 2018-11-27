@@ -26,6 +26,13 @@
             }
             &.expandable {
               cursor: pointer;
+              i {
+                transform: rotate(0);
+                transition: transform .25s ease-in-out;
+                &.spin {
+                  transform: rotate(90deg);
+                }
+              }
             }
 
             &.details {
