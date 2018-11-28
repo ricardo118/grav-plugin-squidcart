@@ -23,7 +23,7 @@
                         <dt>{{ 'PLUGIN_SQUIDCART.ID'|tu }}</dt>
                         <dd>{{ product.id }}</dd>
                         <dt>{{ 'PLUGIN_SQUIDCART.CREATED'|tu|capitalize }}</dt>
-                        <dd>{{ product.created }}</dd>
+                        <dd>{{ product.created|date('Y/m/d H:i') }}</dd>
                         <dt>{{ 'PLUGIN_SQUIDCART.NAME'|tu }}</dt>
                         <dd>{{ product.name }}</dd>
                         <dt>{{ 'PLUGIN_SQUIDCART.CAPTION'|tu }}</dt>
@@ -33,7 +33,11 @@
                     </dl>
                     <dl class="section-define-right">
                         <dt>{{ 'PLUGIN_SQUIDCART.STATUS'|tu }}</dt>
-                        <dd>{{ product.shippable ? 'PLUGIN_SQUIDCART.ACTIVE'|tu ? 'PLUGIN_SQUIDCART.INACTIVE'|tu }}</dd>
+                        <dd>{% if product.active %}
+                               <span style="color:green">{{ 'PLUGIN_SQUIDCART.ACTIVE'|tu }} <i class="fa fa-check"></i></span>
+                            {% else %}
+                                <span style="color:grey">{{ 'PLUGIN_SQUIDCART.INACTIVE'|tu }}</span>
+                            {% endif %}</dd>
                         <dt>{{ 'PLUGIN_SQUIDCART.ATTRIBUTES'|tu }}</dt>
                         <dd>{% for attr in product.attributes %}<span class="badge mr-2">{{ attr }} </span>{% endfor %}</dd>
                         <dt>{{ 'PLUGIN_SQUIDCART.SHIPPABLE'|tu }}</dt>
@@ -70,8 +74,16 @@
                                         {{ attribute(item.attributes, attr) }}{{ loop.last ? '' : ',' }}
                                     {% endfor %}
                                 </td>
-                                <td class="right"><a href="#"><i class="fa fa-close"></i> Delete</a></td>
-                                <td class="center"><a href="#"><i class="fa fa-edit"></i> Edit</a></td>
+                                <td class="right">
+                                    {% if item.inventory.type is sameas('bucket') %}
+                                        {{ ('PLUGIN_SQUIDCART.' ~ item.inventory.value|upper)|tu|raw }}
+                                    {% elseif item.inventory.type is sameas('finite') %}
+                                        {% set color = item.inventory.quantity < 10 ? 'orange' : 'black' %}
+                                        {{ 'PLUGIN_SQUIDCART.LEFT'|tu|format(color,item.inventory.quantity)|raw }}
+                                    {% endif %}
+                                </td>
+                                <td class="right"><a href="#"><i class="fa fa-close"></i> {{ 'PLUGIN_SQUIDCART.DELETE'|tu }}</a></td>
+                                <td class="center"><a href="#"><i class="fa fa-edit"></i> {{ 'PLUGIN_SQUIDCART.EDIT'|tu }}</a></td>
                             </tr>
                         {% endfor %}
                         </tbody>
