@@ -21,10 +21,15 @@ class SquidCartPlugin extends Plugin
      * @var Squidcart
      */
     protected $squidcart;
+    protected $orders;
+    protected $customers;
+    protected $products;
+
     /**
      * @var Stripe
      */
     protected $stripe;
+
     /**
      * @var array
      */
@@ -38,9 +43,7 @@ class SquidCartPlugin extends Plugin
     public static function getSubscribedEvents()
     {
         return [
-            'onPluginsInitialized' => ['onPluginsInitialized', 0],
-            'onTwigTemplatePaths'  => ['onTwigTemplatePaths' , 0],
-            'onTwigExtensions' => ['onTwigExtensions', 0],
+            'onPluginsInitialized' => ['onPluginsInitialized', 0]
         ];
     }
 
@@ -52,16 +55,19 @@ class SquidCartPlugin extends Plugin
         $this->getConfigs();
 
         // Check we are setup
-        if ($this->setup()) {
-
+        if ($this->setup())
+        {
             $this->initializeSquidcart();
 
             $this->enable([
-                'onAssetsInitialized' => ['onAssetsInitialized', 0]
+                'onAssetsInitialized' => ['onAssetsInitialized', 0],
+                'onTwigSiteVariables' => ['onTwigSiteVariables', 0],
+                'onTwigTemplatePaths'  => ['onTwigTemplatePaths' , 0],
+                'onTwigExtensions' => ['onTwigExtensions', 0]
             ]);
 
-            if ($this->isAdmin()) {
-
+            if ($this->isAdmin())
+            {
                 $this->enable([
                     'onAdminMenu' => ['onAdminMenu', 0]
                 ]);
@@ -77,7 +83,6 @@ class SquidCartPlugin extends Plugin
         if ($mode !== 'live' || $mode !== 'test')
         {
             $this->keys = $this->configs['keys'][$mode];
-
             if (isset($this->keys['public']) || isset($this->$keys['secret']))
             {
                 return true;
@@ -92,28 +97,21 @@ class SquidCartPlugin extends Plugin
     /**
      * Initialize the Squidcart Class.
      */
-    protected function initializeSquidcart()
+    public function initializeSquidcart()
     {
         // Autoload classes
         require_once __DIR__ . '/vendor/autoload.php';
         require_once __DIR__ . '/classes/Squidcart.php';
 
-
-        // Initialize Squidcart class.
+        // Initialize Squidcart and Stripe class.
         $this->squidcart = new Squidcart($this->keys);
         $this->squidcart->init();
         $this->stripe = $this->squidcart->initializeStripe();
-        $orders = new Orders($this->stripe, $this->configs);
-        $customers = new Customers($this->stripe, $this->configs);
-        $products = new Products($this->stripe, $this->configs);
 
-        $twig = $this->grav['twig'];
-        $twig->twig_vars['squidcart']['mode'] = $this->configs['mode'];
-        $twig->twig_vars['squidcart']['currency'] = $this->configs['currency'];
-        $twig->twig_vars['products'] = $products->getProducts();
-        $twig->twig_vars['customers'] = $customers->getCustomers();
-        $twig->twig_vars['orders'] = $orders->getOrders();
-
+        // Initialize
+        $this->orders    = new Orders    ($this->stripe, $this->configs);
+        $this->customers = new Customers ($this->stripe, $this->configs);
+        $this->products  = new Products  ($this->stripe, $this->configs);
     }
 
     /**
@@ -124,13 +122,25 @@ class SquidCartPlugin extends Plugin
         $this->configs = $this->config->get('plugins.squidcart');
     }
 
-    /**
-     * Add templates directory to twig lookup paths. We use this way of adding templates
-     * rather than the scanTemplates method so they don't get added to the `Add Page` in admin
-     */
+    public function onAssetsInitialized()
+    {
+        if ($this->isAdmin())
+        {
+            $this->grav['assets']->addCss('user/plugins/squidcart/admin/css-compiled/squidcart.css', 1);
+            $this->grav['assets']->addJs('user/plugins/squidcart/js/admin.js', 1);
+        }
+    }
+
+    // Twig related functions below
+    public function onAdminMenu()
+    {
+        $this->grav['twig']->plugins_hooked_nav['Squidcart'] = ['route' => 'squidcart', 'icon' => ' fa-cc-stripe', 'authorize' => 'admin.squidcart'];
+    }
+
     public function onTwigTemplatePaths()
     {
-        if ($this->isAdmin()) {
+        if ($this->isAdmin())
+        {
             $this->grav['twig']->twig_paths[] = __DIR__ . '/admin/templates';
         }
 
@@ -143,23 +153,18 @@ class SquidCartPlugin extends Plugin
         $this->grav['twig']->twig->addExtension(new SquidcartTwigExtension($this->configs, $this->stripe));
     }
 
-    public function onAdminMenu()
+    public function onTwigSiteVariables()
     {
-        $this->grav['twig']->plugins_hooked_nav['Squidcart'] = ['route' => 'squidcart', 'icon' => ' fa-cc-stripe', 'authorize' => 'admin.squidcart'];
-    }
+        $twig = $this->grav['twig'];
 
-    public function onAssetsInitialized()
-    {
-        if ($this->isAdmin()) {
-            $this->grav['assets']->addCss('user/plugins/squidcart/admin/css-compiled/squidcart.css', 1);
-            $this->grav['assets']->addJs('user/plugins/squidcart/js/admin.js', 1);
+        $twig->twig_vars['squidcart']['mode'] = $this->configs['mode'];
+        $twig->twig_vars['squidcart']['currency'] = $this->configs['currency'];
+        $twig->twig_vars['products'] = $this->products->getProducts();
+
+        if ($this->isAdmin())
+        {
+            $twig->twig_vars['customers'] = $this->customers->getCustomers();
+            $twig->twig_vars['orders'] = $this->orders->getOrders();
         }
-
     }
-
-    public static function getProducts()
-    {
-
-    }
-
 }
