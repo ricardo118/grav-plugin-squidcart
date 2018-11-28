@@ -60,7 +60,77 @@
 
   }
 
+  .rounded {
+    border-radius: 7%;
+  }
+  .d-block {
+    display: block !important;
+  }
   .text-right {
     text-align: right;
+  }
+
+  // Spacing
+  @include margin-variant(0, 0);
+  @include margin-variant(1, $unit-1);
+  @include margin-variant(2, $unit-2);
+  @include margin-variant(neg2, -$unit-2);
+  @include margin-variant(3, $unit-3);
+
+  @include padding-variant(0, 0);
+  @include padding-variant(1, $unit-1);
+  @include padding-variant(2, $unit-2);
+  @include padding-variant(3, $unit-3);
+
+  .details {
+    flex: auto;
+    width: 100%;
+    padding: 0;
+    background: $white;
+
+    .details-wrapper {
+      display:none;
+
+      .details-section {
+        padding-bottom: 15px;
+        font-size: 13px;
+
+        .details-container {
+          line-height: 13px;
+          overflow: auto;
+          position: relative;
+          border: 1px solid $content-tabs-bg;
+          background: $white;
+          margin-top:8px;
+          table thead tr:hover {
+            background-color: #414147;
+          }
+          .section-define-left {
+            float: left;
+            width: 50%;
+          }
+          .section-define-right {
+            float: right;
+            width: 50%;
+          }
+          dt {
+            display: block;
+            float: left;
+            padding: 0 15px 0 13px;
+            line-height: 22px;
+            text-align: right;
+            width: 30%;
+          }
+          dd {
+            color: $black;
+            min-height: 22px;
+            line-height: 22px;
+            word-wrap: break-word;
+            overflow: hidden;
+            margin-left: 30%;
+          }
+        }
+      }
+    }
   }
 }

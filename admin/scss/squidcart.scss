@@ -1,8 +1,9 @@
 @charset "UTF-8";
 
 // Core variables and mixins
+@import "variables";
 @import "colors";
-//@import "mixins";
+@import "mixins";
 
 @import "base";
 @import "tables";
