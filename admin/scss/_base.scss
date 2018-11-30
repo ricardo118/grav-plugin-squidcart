@@ -60,28 +60,6 @@
 
   }
 
-  .rounded {
-    border-radius: 7%;
-  }
-  .d-block {
-    display: block !important;
-  }
-  .text-right {
-    text-align: right;
-  }
-
-  // Spacing
-  @include margin-variant(0, 0);
-  @include margin-variant(1, $unit-1);
-  @include margin-variant(2, $unit-2);
-  @include margin-variant(neg2, -$unit-2);
-  @include margin-variant(3, $unit-3);
-
-  @include padding-variant(0, 0);
-  @include padding-variant(1, $unit-1);
-  @include padding-variant(2, $unit-2);
-  @include padding-variant(3, $unit-3);
-
   .details {
     flex: auto;
     width: 100%;
@@ -131,6 +109,59 @@
           }
         }
       }
+    }
+  }
+
+  .rounded {
+    border-radius: 7%;
+  }
+  .d-block {
+    display: block !important;
+  }
+  .text-right {
+    text-align: right;
+  }
+
+  .no-border {
+    border: none !important;
+  }
+
+  .bt {
+    border-top:1px solid $content-tabs-bg !important;
+  }
+
+  // Spacing
+  @include margin-variant(0, 0);
+  @include margin-variant(1, $unit-1);
+  @include margin-variant(2, $unit-2);
+  @include margin-variant(neg2, -$unit-2);
+  @include margin-variant(3, $unit-3);
+
+  @include padding-variant(0, 0);
+  @include padding-variant(1, $unit-1);
+  @include padding-variant(2, $unit-2);
+  @include padding-variant(3, $unit-3);
+
+
+  @keyframes slideInUp {
+    from {
+      transform: translate3d(0, 100px, 0);
+      visibility: visible;
+    }
+
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes slideOutDown {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+
+    to {
+      visibility: hidden;
+      transform: translate3d(0, 100%, 0);
     }
   }
 }

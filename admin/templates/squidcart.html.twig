@@ -1,8 +1,10 @@
 {% extends 'partials/base.html.twig' %}
+
 {% do assets.addCss('https://unpkg.com/purecss@1.0.0/build/base-min.css', 10) %}
 {% do assets.addCss('https://unpkg.com/purecss@1.0.0/build/grids-min.css',10) %}
 {% do assets.addCss('https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css',10) %}
 
+{% do assets.addJs('//rubaxa.github.io/Sortable/Sortable.js') %}
 
 {% set title = "PLUGIN_ADMIN.DASHBOARD"|tu %}
 {% set slug = uri.basename|e %}
@@ -75,4 +77,6 @@
 </div>
 {% endblock %}
 
-{% block content_bottom %}{% endblock %}
+{% block content_bottom %}
+    {% include 'modals/unsaved.html.twig' %}
+{% endblock %}

@@ -41,3 +41,7 @@ PLUGIN_SQUIDCART:
   IN_STOCK: '<span style="color:green">in Stock</span>'
   LIMITED: '<span style="color:orange">limited</span>'
   LEFT: '<span style="color:%s">%s left</span>'
+  AVAILABILITY: 'Availability'
+  UNSAVED: 'Careful &#8212; you have unsaved changes!'
+  RESET_BTN: 'Reset'
+  SAVE_BTN: 'Save Changes'

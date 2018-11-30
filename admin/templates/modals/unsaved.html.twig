@@ -1,0 +1,11 @@
+<div class="modal-unsaved-wrapper">
+    <div id="modal-unsaved" class="modal" data-modal-unsaved>
+        <p class="m-0 py-2">{{ 'PLUGIN_SQUIDCART.UNSAVED'|tu|raw }}</p>
+        <div class="actions">
+            {% spaceless %}
+                <a class="" href="{{ uri.uri }}" data-modal-unsaved="reset">{{ 'PLUGIN_SQUIDCART.RESET_BTN'|tu }}</a>
+                <button class="py-2" data-modal-unsaved="save">{{ 'PLUGIN_SQUIDCART.SAVE_BTN'|tu }}</button>
+            {% endspaceless %}
+        </div>
+    </div>
+</div>
