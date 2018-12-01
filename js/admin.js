@@ -33,16 +33,35 @@ $(document).ready(function () {
         });
     }
 
+    window.onbeforeunload = function() {
+        $('#modal-unsaved').addClass('shake');
+        if (changes.length) {
+            // return "Are you sure you want to navigate away?";
+        }
+    }
+
+    $('[data-modal-unsaved=save]').on('click', function (e) {
+        console.log('save');
+        $('#modal-unsaved').addClass('slideOutDown');
+        setTimeout(function(){
+            $('.modal-unsaved-wrapper').hide();
+            $('#modal-unsaved').removeClass('slideOutDown').removeClass('shake');
+        }, 800);
+    });
+
     function changesDetected(change) {
         if (changes.indexOf(change) === -1) changes.push(change);
         if (changes.length) {
-            $('#modal-unsaved').show();
+            $('.modal-unsaved-wrapper').show();
             console.log(changes);
         }
     }
 
     function onSaveChanges() {
-        product_images
 
     }
+
 });
+
+
+

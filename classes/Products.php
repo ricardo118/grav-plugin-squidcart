@@ -133,8 +133,13 @@ class Products
 
     }
 
-    public function deleteSku()
+    public function deleteSku($id)
     {
-
+        $stripe = new SKU();
+        try {
+            dump($stripe->delete($id));
+        } catch (Api $e) {
+            dump($e);
+        }
     }
 }

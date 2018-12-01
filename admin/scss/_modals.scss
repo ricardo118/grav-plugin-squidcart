@@ -3,8 +3,9 @@
   .modal-unsaved-wrapper {
     width: 100%;
     position: absolute;
-    bottom: 40px;
+    bottom: 100px;
     z-index:99;
+    display:none;
 
     #modal-unsaved {
       background: $content-tabs-bg;
@@ -14,8 +15,8 @@
       color: $content-header;
       margin: 0 auto;
       border-radius: 5px;
-      display:none;
       @include animation(0, 0.7s, slideInUp);
+      border: 1px solid black;
 
       p {
         display: inline-block;
@@ -38,6 +39,14 @@
           padding-left: 12px !important;
           padding-right: 12px !important;
         }
+      }
+
+      &.shake {
+        @include animation(0, 0.7s, shake);
+      }
+
+      &.slideOutDown {
+        @include animation(0, 0.7s, slideOutDown);
       }
     }
   }

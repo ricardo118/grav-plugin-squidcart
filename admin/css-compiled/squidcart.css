@@ -35,12 +35,55 @@
   line-height: 35px; }
 .squidcart #admin-main .tabs-content .tab__content {
   padding-top: 0; }
+.squidcart .details {
+  flex: auto;
+  width: 100%;
+  padding: 0;
+  background: #ffffff; }
+  .squidcart .details .details-wrapper {
+    display: none; }
+    .squidcart .details .details-wrapper .details-section {
+      padding-bottom: 15px;
+      font-size: 13px; }
+      .squidcart .details .details-wrapper .details-section .details-container {
+        line-height: 13px;
+        overflow: auto;
+        position: relative;
+        border: 1px solid #e3e3e3;
+        background: #ffffff;
+        margin-top: 8px; }
+        .squidcart .details .details-wrapper .details-section .details-container table thead tr:hover {
+          background-color: #414147; }
+        .squidcart .details .details-wrapper .details-section .details-container .section-define-left {
+          float: left;
+          width: 50%; }
+        .squidcart .details .details-wrapper .details-section .details-container .section-define-right {
+          float: right;
+          width: 50%; }
+        .squidcart .details .details-wrapper .details-section .details-container dt {
+          display: block;
+          float: left;
+          padding: 0 15px 0 13px;
+          line-height: 22px;
+          text-align: right;
+          width: 30%; }
+        .squidcart .details .details-wrapper .details-section .details-container dd {
+          color: #000000;
+          min-height: 22px;
+          line-height: 22px;
+          word-wrap: break-word;
+          overflow: hidden;
+          margin-left: 30%; }
 .squidcart .rounded {
   border-radius: 7%; }
 .squidcart .d-block {
   display: block !important; }
 .squidcart .text-right {
   text-align: right; }
+.squidcart .no-border {
+  border: none !important; }
+.squidcart .bt {
+  border-top: 1px solid #e3e3e3 !important; }
 .squidcart .m-0 {
   margin: 0 !important; }
 .squidcart .mb-0 {
@@ -185,46 +228,33 @@
 .squidcart .py-3 {
   padding-bottom: 8px !important;
   padding-top: 8px !important; }
-.squidcart .details {
-  flex: auto;
-  width: 100%;
-  padding: 0;
-  background: #ffffff; }
-  .squidcart .details .details-wrapper {
-    display: none; }
-    .squidcart .details .details-wrapper .details-section {
-      padding-bottom: 15px;
-      font-size: 13px; }
-      .squidcart .details .details-wrapper .details-section .details-container {
-        line-height: 13px;
-        overflow: auto;
-        position: relative;
-        border: 1px solid #e3e3e3;
-        background: #ffffff;
-        margin-top: 8px; }
-        .squidcart .details .details-wrapper .details-section .details-container table thead tr:hover {
-          background-color: #414147; }
-        .squidcart .details .details-wrapper .details-section .details-container .section-define-left {
-          float: left;
-          width: 50%; }
-        .squidcart .details .details-wrapper .details-section .details-container .section-define-right {
-          float: right;
-          width: 50%; }
-        .squidcart .details .details-wrapper .details-section .details-container dt {
-          display: block;
-          float: left;
-          padding: 0 15px 0 13px;
-          line-height: 22px;
-          text-align: right;
-          width: 30%; }
-        .squidcart .details .details-wrapper .details-section .details-container dd {
-          color: #000000;
-          min-height: 22px;
-          line-height: 22px;
-          word-wrap: break-word;
-          overflow: hidden;
-          margin-left: 30%; }
-
+@keyframes slideInUp {
+  from {
+    transform: translate3d(0, 100px, 0);
+    visibility: visible; }
+  to {
+    transform: translate3d(0, 0, 0); } }
+@keyframes slideOutDown {
+  from {
+    transform: translate3d(0, 0, 0); }
+  to {
+    visibility: hidden;
+    transform: translate3d(0, 150px, 0); } }
+@keyframes shake {
+  from,
+    to {
+    transform: translate3d(0, 0, 0); }
+  10%,
+    30%,
+    50%,
+    70%,
+    90% {
+    transform: translate3d(-10px, 0, 0); }
+  20%,
+    40%,
+    60%,
+    80% {
+    transform: translate3d(10px, 0, 0); } }
 .squidcart #admin-main table thead {
   background-color: #414147;
   color: #ffffff; }
@@ -253,6 +283,84 @@
     border-bottom: none; }
 .squidcart .badge.canceled {
   background-color: #FF4136; }
+
+.squidcart .modal-unsaved-wrapper {
+  width: 100%;
+  position: absolute;
+  bottom: 100px;
+  z-index: 99;
+  display: none; }
+  .squidcart .modal-unsaved-wrapper #modal-unsaved {
+    background: #e3e3e3;
+    max-width: 600px;
+    width: 80%;
+    padding: 10px;
+    color: #414147;
+    margin: 0 auto;
+    border-radius: 5px;
+    -webkit-animation-delay: 0;
+    -webkit-animation-duration: 0.7s;
+    -webkit-animation-name: slideInUp;
+    -webkit-animation-fill-mode: both;
+    /* this prevents the animation from restarting! */
+    -moz-animation-delay: 0;
+    -moz-animation-duration: 0.7s;
+    -moz-animation-name: slideInUp;
+    -moz-animation-fill-mode: both;
+    /* this prevents the animation from restarting! */
+    animation-delay: 0;
+    animation-duration: 0.7s;
+    animation-name: slideInUp;
+    animation-fill-mode: both;
+    /* this prevents the animation from restarting! */
+    border: 1px solid black; }
+    .squidcart .modal-unsaved-wrapper #modal-unsaved p {
+      display: inline-block;
+      font-weight: bold; }
+    .squidcart .modal-unsaved-wrapper #modal-unsaved .actions {
+      display: inline-block;
+      float: right; }
+      .squidcart .modal-unsaved-wrapper #modal-unsaved .actions a {
+        vertical-align: middle;
+        color: #6f7b8a;
+        margin-right: 20px !important; }
+      .squidcart .modal-unsaved-wrapper #modal-unsaved .actions button {
+        background-color: #06A599;
+        color: white;
+        padding-left: 12px !important;
+        padding-right: 12px !important; }
+    .squidcart .modal-unsaved-wrapper #modal-unsaved.shake {
+      -webkit-animation-delay: 0;
+      -webkit-animation-duration: 0.7s;
+      -webkit-animation-name: shake;
+      -webkit-animation-fill-mode: both;
+      /* this prevents the animation from restarting! */
+      -moz-animation-delay: 0;
+      -moz-animation-duration: 0.7s;
+      -moz-animation-name: shake;
+      -moz-animation-fill-mode: both;
+      /* this prevents the animation from restarting! */
+      animation-delay: 0;
+      animation-duration: 0.7s;
+      animation-name: shake;
+      animation-fill-mode: both;
+      /* this prevents the animation from restarting! */ }
+    .squidcart .modal-unsaved-wrapper #modal-unsaved.slideOutDown {
+      -webkit-animation-delay: 0;
+      -webkit-animation-duration: 0.7s;
+      -webkit-animation-name: slideOutDown;
+      -webkit-animation-fill-mode: both;
+      /* this prevents the animation from restarting! */
+      -moz-animation-delay: 0;
+      -moz-animation-duration: 0.7s;
+      -moz-animation-name: slideOutDown;
+      -moz-animation-fill-mode: both;
+      /* this prevents the animation from restarting! */
+      animation-delay: 0;
+      animation-duration: 0.7s;
+      animation-name: slideOutDown;
+      animation-fill-mode: both;
+      /* this prevents the animation from restarting! */ }
 
 #products .product-wrapper .product-details .product-title {
   border-bottom: 0;

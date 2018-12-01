@@ -3,6 +3,8 @@ namespace Grav\Plugin;
 
 use Grav\Common\Page\Page;
 use Grav\Common\Plugin;
+use Grav\Common\Utils;
+use Grav\Plugin\SquidCart\Controller;
 use Grav\Plugin\SquidCart\Customers;
 use Grav\Plugin\SquidCart\Orders;
 use Grav\Plugin\SquidCart\Products;
@@ -62,14 +64,15 @@ class SquidCartPlugin extends Plugin
             $this->enable([
                 'onAssetsInitialized' => ['onAssetsInitialized', 0],
                 'onTwigSiteVariables' => ['onTwigSiteVariables', 0],
-                'onTwigTemplatePaths'  => ['onTwigTemplatePaths' , 0],
-                'onTwigExtensions' => ['onTwigExtensions', 0]
+                'onTwigTemplatePaths' => ['onTwigTemplatePaths' , 0],
+                'onTwigExtensions'    => ['onTwigExtensions', 0]
             ]);
 
             if ($this->isAdmin())
             {
                 $this->enable([
-                    'onAdminMenu' => ['onAdminMenu', 0]
+                    'onAdminMenu'        => ['onAdminMenu', 0],
+                    'onTask.squidcart.delete.sku'  => ['taskController', 0],
                 ]);
             }
 
@@ -102,6 +105,7 @@ class SquidCartPlugin extends Plugin
         // Autoload classes
         require_once __DIR__ . '/vendor/autoload.php';
         require_once __DIR__ . '/classes/Squidcart.php';
+        require_once __DIR__ . '/classes/Controller.php';
 
         // Initialize Squidcart and Stripe class.
         $this->squidcart = new Squidcart($this->keys);
@@ -167,4 +171,28 @@ class SquidCartPlugin extends Plugin
             $twig->twig_vars['orders'] = $this->orders->getOrders();
         }
     }
+
+    /**
+     * Initialize login controller
+     */
+    public function taskController()
+    {
+        /** @var Uri $uri */
+        $uri = $this->grav['uri'];
+        $task = !empty($_POST['task']) ? $_POST['task'] : $uri->param('task');
+        $task = explode('.', $task);
+        $post = !empty($_POST) ? $_POST : [];
+        $action = $task[1];
+        $subaction = $task[2] ? $task[2] : '';
+
+        switch ($task) {
+            case 'delete.sku':
+                break;
+        }
+
+        $controller = new Controller($this->grav, $action, $subaction, $post);
+        $controller->execute();
+        $controller->redirect();
+    }
+
 }

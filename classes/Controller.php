@@ -3,45 +3,174 @@
 namespace Grav\Plugin\SquidCart;
 
 use Grav\Common\Grav;
-use Grav\Framework\Cache;
-use Grav\Common\Page\Page;
-use RocketTheme\Toolbox\Event\Event;
+use Grav\Common\Language\Language;
+use Grav\Common\Uri;
+use Grav\Common\User\User;
+use Grav\Common\Utils;
 use RocketTheme\Toolbox\Session\Message;
 
 /**
  * Class Controller
- * @package Grav\Plugin\ShoppingCart
+ * @package Grav\Plugin\Login
  */
 class Controller
 {
-    private $grav;
+    /**
+     * @var Grav
+     */
+    public $grav;
+
+    /**
+     * @var string
+     */
+    public $action;
+
+    /**
+     * @var string
+     */
+    public $subaction;
+
+    /**
+     * @var array
+     */
+    public $post;
+
+    /**
+     * @var string
+     */
+    protected $redirect;
+
+    /**
+     * @var int
+     */
+    protected $redirectCode;
+
+    /**
+     * @var string
+     */
+    protected $prefix = 'task';
 
     /**
      * @param Grav   $grav
+     * @param string $action
+     * @param string $subaction
+     * @param array  $post
      */
-    public function __construct(Grav $grav)
+    public function __construct(Grav $grav, $action, $subaction = null, $post = null)
     {
-        $this->grav = Grav::instance();
+        $this->grav = $grav;
+        $this->action = $action;
+        $this->subaction = $subaction;
+        $this->post = $post ? $this->getPost($post) : [];
     }
 
     /**
-     * @param $url
-     * @param $filename
+     * Performs an action.
+     * @throws \RuntimeException
      */
-    public function addPage($url, $filename)
+    public function execute()
     {
-        /** @var Pages $pages */
-        $pages = $this->grav['pages'];
-        $page = $pages->dispatch($url);
+        $messages = $this->grav['messages'];
 
-        if (!$page) {
-            $page = new Page;
-            $page->init(new \SplFileInfo(__DIR__ . '/pages/' . $filename));
-            $page->slug(basename($url));
-            $pages->addPage($page, $url);
+        // Set redirect if available.
+        if (isset($this->post['_redirect'])) {
+            $redirect = $this->post['_redirect'];
+            unset($this->post['_redirect']);
         }
 
+        $success = false;
+        $method = $this->prefix . ucfirst($this->action);
+
+        if (!method_exists($this, $method)) {
+            throw new \RuntimeException($method, 404);
+        }
+
+        try {
+            $success = call_user_func([$this, $method]);
+        } catch (\RuntimeException $e) {
+            $messages->add($e->getMessage(), 'error');
+            $this->grav['log']->error('plugin.squidcart: '. $e->getMessage());
+        }
+
+        if (!$this->redirect && isset($redirect)) {
+            $this->setRedirect($redirect, 303);
+        }
+
+        return $success;
+    }
+
+    public function taskDelete() {
+        dump($this->subaction);
     }
 
 
+    /**
+     * Redirects an action
+     */
+    public function redirect()
+    {
+        if ($this->redirect) {
+            $this->grav->redirect($this->redirect, $this->redirectCode);
+        }
+    }
+
+    /**
+     * Set redirect.
+     *
+     * @param     $path
+     * @param int $code
+     */
+    public function setRedirect($path, $code = 303)
+    {
+        $this->redirect = $path;
+        $this->redirectCode = $code;
+    }
+
+    /**
+     * @return array Array containing [redirect, code].
+     */
+    public function getRedirect()
+    {
+        return [$this->redirect, $this->redirectCode];
+    }
+
+    /**
+     * Prepare and return POST data.
+     *
+     * @param array $post
+     *
+     * @return array
+     */
+    protected function &getPost(array $post)
+    {
+        unset($post[$this->prefix]);
+
+        // Decode JSON encoded fields and merge them to data.
+        if (isset($post['_json'])) {
+            $post = array_merge_recursive($post, $this->jsonDecode($post['_json']));
+            unset($post['_json']);
+        }
+
+        return $post;
+    }
+
+    /**
+     * Recursively JSON decode data.
+     *
+     * @param  array $data
+     *
+     * @return array
+     */
+    protected function jsonDecode(array $data)
+    {
+        foreach ($data as &$value) {
+            if (is_array($value)) {
+                $value = $this->jsonDecode($value);
+            } else {
+                $value = json_decode($value, true);
+            }
+        }
+
+        return $data;
+    }
 }
