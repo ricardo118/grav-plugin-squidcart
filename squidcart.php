@@ -72,7 +72,7 @@ class SquidCartPlugin extends Plugin
             {
                 $this->enable([
                     'onAdminMenu'        => ['onAdminMenu', 0],
-                    'onAction.squidcart.delete.sku' => ['taskController', 0],
+                    'onTask.squidcart.delete.sku' => ['taskController', 0],
                 ]);
             }
 
@@ -179,7 +179,7 @@ class SquidCartPlugin extends Plugin
     {
         /** @var Uri $uri */
         $uri = $this->grav['uri'];
-        $task = !empty($_POST['action']) ? $_POST['action'] : $uri->param('action');
+        $task = !empty($_POST['task']) ? $_POST['task'] : $uri->param('task');
         $task = explode('.', $task);
         $post = !empty($_POST) ? $_POST : [];
         $action = $task[1];

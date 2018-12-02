@@ -109,7 +109,7 @@ class Controller
     public function taskDelete() {
         switch ($this->subaction) {
             case 'sku':
-
+                    dump('test');
                     return 'ble';
                 break;
             case 'product':
