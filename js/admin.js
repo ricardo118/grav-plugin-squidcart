@@ -22,15 +22,19 @@ $(document).ready(function () {
         });
     });
 
-    const sortable = document.getElementById('sortable');
-    if (sortable) {
-        Sortable.create(sortable, {
-            group: sortable,
-            animation: 100,
-            onSort: function (evt) {
-                changesDetected('updateProduct');
-            },
-        });
+    initSortable();
+
+    function initSortable () {
+        const sortable = document.getElementById('sortable');
+        if (sortable) {
+            Sortable.create(sortable, {
+                group: sortable,
+                animation: 100,
+                onSort: function (evt) {
+                    changesDetected('updateProduct');
+                },
+            });
+        }
     }
 
     window.onbeforeunload = function() {
@@ -61,6 +65,45 @@ $(document).ready(function () {
 
     }
 
+    // var pjax = new Pjax({
+    //     elements: "a", // default is "a[href], form[action]"
+    //     selectors: ["#squidcart-content"],
+    //     switches: {
+    //         "#squidcart-content": Pjax.switches.sideBySide
+    //     },
+    //     switchesOptions: {
+    //         "#squidcart-content": {
+    //             classNames: {
+    //                 remove: "animated",
+    //                 add: "animated",
+    //                 backward: "fadeIn",
+    //                 forward: "fadeOut"
+    //             },
+    //             callbacks: {
+    //                 removeElement: function () {
+    //                     initSortable()
+    //                 }
+    //             }
+    //         }
+    //     }
+    // });
+
+    $('[data-action]').on('click', function (e) {
+        e.preventDefault();
+        let target = $(this);
+        let action = target.data('action');
+        let id = target.data('id');
+        let href = target.attr('href');
+        let url = `${href}/action:squidcart.${action}/id:${id}`;
+        console.log(url);
+        $.ajax({
+            url: url,
+        }).done(function(data) {
+            console.log(data);
+        }).fail(function() {
+            alert( "error" );
+        });
+    });
 });
 
 

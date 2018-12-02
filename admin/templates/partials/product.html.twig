@@ -86,7 +86,7 @@
                                         {{ 'PLUGIN_SQUIDCART.LEFT'|tu|format(color,item.inventory.quantity)|raw }}
                                     {% endif %}
                                 </td>
-                                <td class="right"><a href="#"><i class="fa fa-close"></i> {{ 'PLUGIN_SQUIDCART.DELETE'|tu }}</a></td>
+                                <td class="right"><a href="{{ uri.path }}" data-action="delete.sku" data-id="{{ item.id }}"><i class="fa fa-close"></i> {{ 'PLUGIN_SQUIDCART.DELETE'|tu }}</a></td>
                                 <td class="center"><a href="#"><i class="fa fa-edit"></i> {{ 'PLUGIN_SQUIDCART.EDIT'|tu }}</a></td>
                                 <td class="details p-0">
                                     <div class="details-wrapper">

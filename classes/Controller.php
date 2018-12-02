@@ -31,6 +31,11 @@ class Controller
     public $subaction;
 
     /**
+     * @var string
+     */
+    public $id;
+
+    /**
      * @var array
      */
     public $post;
@@ -54,13 +59,15 @@ class Controller
      * @param Grav   $grav
      * @param string $action
      * @param string $subaction
+     * @param string $id
      * @param array  $post
      */
-    public function __construct(Grav $grav, $action, $subaction = null, $post = null)
+    public function __construct(Grav $grav, $action, $subaction, $id, $post = null)
     {
         $this->grav = $grav;
         $this->action = $action;
         $this->subaction = $subaction;
+        $this->id = $id;
         $this->post = $post ? $this->getPost($post) : [];
     }
 
@@ -100,7 +107,14 @@ class Controller
     }
 
     public function taskDelete() {
-        dump($this->subaction);
+        switch ($this->subaction) {
+            case 'sku':
+
+                    return 'ble';
+                break;
+            case 'product':
+                break;
+        }
     }
 
 

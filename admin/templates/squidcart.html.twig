@@ -5,6 +5,7 @@
 {% do assets.addCss('https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css',10) %}
 
 {% do assets.addJs('//rubaxa.github.io/Sortable/Sortable.js') %}
+{#{% do assets.addJs('https://cdn.jsdelivr.net/npm/pjax/pjax.min.js') %}#}
 
 {% set title = "PLUGIN_ADMIN.DASHBOARD"|tu %}
 {% set slug = uri.basename|e %}
@@ -47,7 +48,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="tabs-content">
+    <div id="squidcart-content" class="tabs-content">
         <div id="tab-content.options.advanced1" class="tab__content  {{ storedTab is same as('data.dashboard') ? 'active' }}">
             <div class="form-tab">
                 {% include "partials/dashboard.html.twig" %}
