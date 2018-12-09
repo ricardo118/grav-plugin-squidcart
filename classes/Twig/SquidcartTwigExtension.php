@@ -3,8 +3,9 @@ namespace Grav\Plugin\Squidcart\Twig;
 
 use Grav\Common\Grav;
 use Grav\Plugin\Squidcart\Products;
+use Twig_Extension;
 
-class SquidcartTwigExtension extends \Twig_Extension
+class SquidcartTwigExtension extends Twig_Extension
 {
     /**
      * @var Grav
@@ -21,14 +22,17 @@ class SquidcartTwigExtension extends \Twig_Extension
         $this->stripe = $stripe;
     }
 
-    public function getFilters()
+    /**
+     * @return array|\Twig_SimpleFilter[]
+     */
+    public function getFilters() : array
     {
         return [
             new \Twig_SimpleFilter('price', [$this, 'priceFilter'])
         ];
     }
 
-    public function getFunctions()
+    public function getFunctions() : array
     {
         return [
             new \Twig_SimpleFunction('getProduct', [$this, 'getProduct'])
@@ -43,7 +47,7 @@ class SquidcartTwigExtension extends \Twig_Extension
 
         if ($currency['position'] === 'right')
         {
-            $number = $number . $currency['symbol'];
+            $number .= $currency['symbol'];
             return $number;
         }
 
@@ -60,8 +64,6 @@ class SquidcartTwigExtension extends \Twig_Extension
     {
         require_once __DIR__ . '/../Products.php';
         $products = new Products($this->stripe, $this->configs);
-        $product = $products->getProduct($id, $skus);
-
-        return $product;
+        return $products->getProduct($id, $skus);
     }
 }

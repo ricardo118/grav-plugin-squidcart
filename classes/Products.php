@@ -32,10 +32,6 @@ class Products
         $this->expiration = $configs['expiration'];
     }
 
-    /**
-     * @param array|null $opts
-     * @return array
-     */
     public function getProducts(Array $opts = null)
     {
         $product = new Product();
@@ -43,7 +39,7 @@ class Products
 
         if(!$data) {
             try {
-                $products = $product->all($opts);
+                $products = $product::all($opts);
                 foreach ($products->autoPagingIterator() as $product) {
                     $data[] = $product;
                 }
@@ -57,11 +53,6 @@ class Products
     }
 
 
-    /**
-     * @param String $id
-     * @param bool $getSkus
-     * @return array
-     */
     public function getProduct(String $id, $getSkus = false)
     {
         $data = $this->getProducts();
@@ -77,7 +68,7 @@ class Products
                     {
                         if($sku['product'] === $id)
                         {
-                            array_push($skus, $sku);
+                            $skus[] = $sku;
                         }
                     }
                     $product['skus'] = $skus;
@@ -110,7 +101,7 @@ class Products
 
         if(!$data) {
             try {
-                $skus = $stripe->all($opts);
+                $skus = $stripe::all($opts);
                 foreach ($skus->autoPagingIterator() as $sku) {
                     $data[] = $sku;
                 }
@@ -139,7 +130,6 @@ class Products
         try {
             dump($stripe->delete($id));
         } catch (Api $e) {
-            dump($e);
         }
     }
 }

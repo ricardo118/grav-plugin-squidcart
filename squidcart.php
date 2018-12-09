@@ -131,6 +131,7 @@ class SquidCartPlugin extends Plugin
         if ($this->isAdmin())
         {
             $this->grav['assets']->addCss('user/plugins/squidcart/admin/css-compiled/squidcart.css', 1);
+            $this->grav['assets']->addJs('user/plugins/squidcart/js/Sortable.min.js');
             $this->grav['assets']->addJs('user/plugins/squidcart/js/admin.js', 1);
         }
     }
