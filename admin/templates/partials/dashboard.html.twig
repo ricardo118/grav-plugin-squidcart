@@ -1,1 +1,13 @@
+{% for payout in dashboard.payout.data %}
+    {{ payout.amount|price }}</br>
+{% endfor %}
+{{ dump(dashboard.payout) }}
 
+<h1>on the way to your bank</h1>
+{% set balance = 0 %}
+{% for payout in dashboard.payout.data %}
+    {% if payout.status is sameas('in_transit') %}
+        {% set balance = balance + payout.amount %}
+    {% endif %}
+{% endfor %}
+{{ balance|price }}

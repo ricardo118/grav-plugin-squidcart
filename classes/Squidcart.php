@@ -1,6 +1,9 @@
 <?php
 namespace Grav\Plugin\Squidcart;
 
+use Stripe\Balance;
+use Stripe\Error\Api;
+use Stripe\Payout;
 use Stripe\Stripe;
 
 class Squidcart
@@ -30,31 +33,30 @@ class Squidcart
         return $stripe;
     }
 
-    // this function does nothing, currently just for keeping track of routes to be
-    public function adminRoutes()
+    public function getDashboard()
     {
-        $dashboard = [
-            '/squidcart/dashboard'
-        ];
 
-        $products = [
-            '/squidcart/products',
-            '/squidcart/products/product:{product_id}',
-            '/squidcart/products/product:{product_id}/update',
-            '/squidcart/products/product:{product_id}/delete'
-        ];
+        $dashboard = [];
+        $dashboard['balance'] = $this->getBalance();
+        $dashboard['payout'] = $this->getPayout();
 
-        $skus = [
-            '/squidcart/skus',
-            '/squidcart/skus/create',
-            '/squidcart/skus/sku:{sku_id}',
-            '/squidcart/skus/sku:{sku_id}/update',
-            '/squidcart/skus/sku:{sku_id}/delete'
-        ];
-
-        $customers = [
-            '/squidcart/customers',
-            '/squidcart/customers/customer:{customer_id}'
-        ];
+        return $dashboard;
     }
+
+    protected function getBalance()
+    {
+        $stripe = new Balance();
+        return $stripe::retrieve()->__toArray();
+    }
+
+    protected function getPayout()
+    {
+        $stripe = new Payout();
+        try {
+            return $stripe::all();
+        } catch (Api $e) {
+
+        }
+    }
+
 }

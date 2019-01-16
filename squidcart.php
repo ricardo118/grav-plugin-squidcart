@@ -23,8 +23,20 @@ class SquidCartPlugin extends Plugin
      * @var Squidcart
      */
     protected $squidcart;
+
+    /**
+     * @var Orders
+     */
     protected $orders;
+
+    /**
+     * @var Customers
+     */
     protected $customers;
+
+    /**
+     * @var Products
+     */
     protected $products;
 
     /**
@@ -40,7 +52,6 @@ class SquidCartPlugin extends Plugin
 
     /**
      * @return array
-     *
      */
     public static function getSubscribedEvents()
     {
@@ -71,11 +82,9 @@ class SquidCartPlugin extends Plugin
             if ($this->isAdmin())
             {
                 $this->enable([
-                    'onAdminMenu'        => ['onAdminMenu', 0],
-                    'onTask.squidcart.delete.sku' => ['taskController', 0],
+                    'onAdminMenu'        => ['onAdminMenu', 0]
                 ]);
             }
-
         }
     }
 
@@ -170,31 +179,7 @@ class SquidCartPlugin extends Plugin
         {
             $twig->twig_vars['customers'] = $this->customers->getCustomers();
             $twig->twig_vars['orders'] = $this->orders->getOrders();
+            $twig->twig_vars['dashboard'] = $this->squidcart->getDashboard();
         }
     }
-
-    /**
-     * Initialize login controller
-     */
-    public function taskController()
-    {
-        /** @var Uri $uri */
-        $uri = $this->grav['uri'];
-        $task = !empty($_POST['task']) ? $_POST['task'] : $uri->param('task');
-        $task = explode('.', $task);
-        $post = !empty($_POST) ? $_POST : [];
-        $action = $task[1];
-        $subaction = $task[2] ? $task[2] : '';
-        $id = !empty($_POST['id']) ? $_POST['id'] : $uri->param('id');
-
-        switch ($task) {
-            case 'delete.sku':
-                break;
-        }
-
-        $controller = new Controller($this->grav, $action, $subaction, $id, $post);
-        $controller->execute();
-        $controller->redirect();
-    }
-
 }
