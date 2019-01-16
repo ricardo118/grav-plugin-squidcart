@@ -52,7 +52,6 @@ class Products
         return $data;
     }
 
-
     public function getProduct(String $id, $getSkus = false)
     {
         $data = $this->getProducts();
