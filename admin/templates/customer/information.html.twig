@@ -1,0 +1,39 @@
+<div class="details pure-u-1 content-padding pt-0">
+    <div class="details-wrapper d-block">
+        <div class="details-section">
+            <b>{{ 'PLUGIN_SQUIDCART.INFO'|tu }}</b>
+            <div class="details-container">
+                <div class="section-define-left">
+                    <h6 class="pl-20"><b>{{ 'PLUGIN_SQUIDCART.ACCOUNT_INFO'|tu }}</b></h6>
+                    <dl class="">
+                        <dt>{{ 'PLUGIN_SQUIDCART.ID'|tu }}</dt>
+                        <dd><b>{{ customer.id }}</b></dd>
+                        <dt>{{ 'PLUGIN_SQUIDCART.CREATED'|tu|capitalize }}</dt>
+                        <dd>{{ customer.created|date('Y/m/d H:i') }}</dd>
+                        <dt>{{ 'PLUGIN_SQUIDCART.EMAIL'|tu }}</dt>
+                        <dd>{{ customer.email }}</dd>
+                        <dt>{{ 'PLUGIN_SQUIDCART.DESCRIPTION'|tu }}</dt>
+                        <dd>{{ customer.description }}</dd>
+                        <dt>{{ 'PLUGIN_SQUIDCART.VAT'|tu }}</dt>
+                        <dd>{{ customer.tax_info }}</dd>
+                    </dl>
+                </div>
+                <div class="section-define-right">
+                    <h6><b>{{ 'PLUGIN_SQUIDCART.BILLING_INFO'|tu }}</b></h6>
+                    <dl class="">
+                        <dt>{{ 'PLUGIN_SQUIDCART.NAME'|tu }}</dt>
+                        <dd>{{ customer.shipping.name }}</dd>
+                        <dt>{{ 'PLUGIN_SQUIDCART.ADDRESS'|tu }}</dt>
+                        <dd>{{ customer.shipping.address.line1 }}</dd>
+                        <dt></dt>
+                        <dd>{{ customer.shipping.address.line2 }}</dd>
+                        <dt></dt>
+                        <dd>{{ customer.shipping.address.city }}, {{ customer.shipping.address.postal_code }}, {{ customer.shipping.address.state }} {{ customer.shipping.address.country }}</dd>
+                        <dt>{{ 'PLUGIN_SQUIDCART.PHONE'|tu }}</dt>
+                        <dd>{{ customer.shipping.phone }}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

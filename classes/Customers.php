@@ -39,6 +39,7 @@ class Customers
             try {
                 $customers = $customer->all($opts);
                 foreach ($customers->autoPagingIterator() as $customer) {
+//                    $data[] = $customer->__toArray(true); // was testing using arrays only, works but has other issues
                     $data[] = $customer;
                 }
             } catch (Api $e) {
@@ -48,5 +49,20 @@ class Customers
 
         $this->cache->save('squidcart_customers', $data, $this->expiration);
         return $data;
+    }
+
+    public function getCustomer(String $id)
+    {
+        $data = $this->getCustomers();
+        $customer = [];
+
+        foreach ($data as $item)
+        {
+            if ($item['id'] === $id) {
+                $customer = $item;
+                return $customer;
+            }
+        }
+        return $customer;
     }
 }

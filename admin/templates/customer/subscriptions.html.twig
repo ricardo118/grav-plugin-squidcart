@@ -1,0 +1,36 @@
+{% if customer.subscriptions.total_count > 0 %}
+{% set subscriptions = customer.subscriptions.data %}
+<div class="details pure-u-1 content-padding pt-0">
+    <div class="details-wrapper d-block">
+        <div class="details-section">
+            <b>{{ 'PLUGIN_SQUIDCART.SUBSCRIPTIONS'|tu }}</b>
+            <div class="details-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <td class="double">{{ 'PLUGIN_SQUIDCART.PRICE'|tu|upper }}</td>
+                        <td class="triple">{{ 'PLUGIN_SQUIDCART.DESCRIPTION'|tu|upper }}</td>
+                        <td class="triple right">{{ 'PLUGIN_SQUIDCART.ACTIVE'|tu|upper }}</td>
+                        <td class="center">{{ 'PLUGIN_SQUIDCART.BILLING'|tu|upper }}</td>
+                        <td class="double center">{{ 'PLUGIN_SQUIDCART.CREATED'|tu|upper }}</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for sub in subscriptions %}
+                        {% set product = getProduct(sub.items.data|first.plan.product) %}
+                        {% set subscription = sub.plan %}
+                        <tr>
+                            <td class="bold double">{{ subscription.amount|price }} {{ 'PLUGIN_SQUIDCART.EVERY'|tu }} {{ subscription.interval_count > 1 ? subscription.interval_count }} {{ subscription.interval|capitalize }}</td>
+                            <td class="triple bold">{{ product.name }}  ― {{ subscription.nickname }}</td>
+                            <td class="triple right"><span class="badge">{{ sub.cancel_at_period_end ? 'PLUGIN_SQUIDCART.CANCELS_AT'|tu ~ sub.current_period_end|date('M d') : 'PLUGIN_SQUIDCART.ACTIVE'|tu  }}</span></td>
+                            <td class="center"><span class="badge">{{ ('PLUGIN_SQUIDCART.' ~ sub.billing|upper)|tu }}</span></td>
+                            <td class="double center">{{ sub.created|date('Y/m/d H:i') }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

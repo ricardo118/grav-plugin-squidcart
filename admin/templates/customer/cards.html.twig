@@ -1,0 +1,72 @@
+{% if customer.sources.data %}
+<div class="details pure-u-1 content-padding pt-0">
+    <div class="details-wrapper d-block">
+        <div class="details-section">
+            <b>{{ 'PLUGIN_SQUIDCART.CARDS'|tu }}</b>
+            <div class="details-container">
+                <table>
+                    <tbody>
+                    {% for card in customer.sources.data %}
+                        <tr>
+                            <td class="expandable shrink"><i class="fa fa-chevron-right"></i></td>
+                            <td class=""><div class="squidcart-icon {{ card.brand|hyphenize }}"></div></td>
+                            <td class="spacing">•••• {{ card.last4 }}</td>
+                            <td class="triple spacing">{{ card.exp_month }} / {{ card.exp_year }}</td>
+                            <td class="triple right"><span class="badge">{{ loop.first ? 'PLUGIN_SQUIDCART.DEFAULT'|tu }}</span></td>
+                            <td class="right"><a href="{{ uri.addNonce(uri.path, 'admin-form', 'admin-nonce') }}" data-action="delete.sku" data-id="{{ item.id }}"><i class="fa fa-close"></i> {{ 'PLUGIN_SQUIDCART.DELETE'|tu }}</a></td>
+                            <td class="center"><a href="#"><i class="fa fa-edit"></i> {{ 'PLUGIN_SQUIDCART.EDIT'|tu }}</a></td>
+                            <td class="details p-0">
+                                <div class="details-wrapper">
+                                    <div class="details-section">
+                                        <div class="details-container m-0 no-border bt">
+                                            <dl class="section-define-left">
+                                                <dt>{{ 'PLUGIN_SQUIDCART.NAME'|tu }}</dt>
+                                                <dd>{{ (card.name ? card.name : 'PLUGIN_SQUIDCART.NO_NAME'|tu)|raw }}</dd>
+                                                <dt>{{ 'PLUGIN_SQUIDCART.NUMBER'|tu }}</dt>
+                                                <dd>•••• {{ card.last4 }}</dd>
+                                                <dt>{{ 'PLUGIN_SQUIDCART.FINGERPRINT'|tu }}</dt>
+                                                <dd><span style="color:grey">{{ card.fingerprint }}</span></dd>
+                                                <dt>{{ 'PLUGIN_SQUIDCART.EXPIRES'|tu }}</dt>
+                                                <dd>{{ card.exp_month }} / {{ card.exp_year }}</dd>
+                                                <dt>{{ 'PLUGIN_SQUIDCART.TYPE'|tu }}</dt>
+                                                <dd><div class="squidcart-icon {{ card.brand|hyphenize }}"></div></dd>
+                                                <dt>{{ 'PLUGIN_SQUIDCART.ID'|tu }}</dt>
+                                                <dd><span style="color:grey">{{ card.id }}</span></dd>
+
+                                                <dt>{{ 'PLUGIN_SQUIDCART.ORIGIN'|tu }}</dt>
+                                                <dd>{{ card.country }}</dd>
+                                            </dl>
+                                            <dl class="section-define-right">
+                                                {% set address = ['address_line1', 'address_line2', 'address_state', 'address_zip', 'address_country'] %}
+                                                {% if card.address_line1 %}
+                                                    {% for i in address %}
+                                                        {% if card[i] %}
+                                                            {% if loop.first %}<dt>{{ 'PLUGIN_SQUIDCART.BILLING_ADDRESS'|tu }}</dt>{% endif %}
+                                                            <dt></dt><dd>{{ card[i] }}</dd>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <dt>{{ 'PLUGIN_SQUIDCART.BILLING_ADDRESS'|tu }}</dt>
+                                                    <dd>{{ 'PLUGIN_SQUIDCART.NO_BILLING_ADDRESS'|tu|raw }}</dd>
+                                                {% endif %}
+                                                <dt>{{ 'PLUGIN_SQUIDCART.CVC_CHECK'|tu }}</dt>
+                                                <dd>{{ card.cvc_check ? ('PLUGIN_SQUIDCART.'~ card.cvc_check|upper)|tu|raw }}</dd>
+                                                <dt>{{ 'PLUGIN_SQUIDCART.ZIP_CHECK'|tu }}</dt>
+                                                <dd>{{ card.address_zip_check ? ('PLUGIN_SQUIDCART.'~ card.address_zip_check|upper)|tu|raw }}</dd>
+                                                <dt>{{ 'PLUGIN_SQUIDCART.STREET_CHECK'|tu }}</dt>
+                                                <dd>{{ card.address_street_check ? ('PLUGIN_SQUIDCART.'~ card.address_street_check|upper)|tu|raw }}</dd>
+
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

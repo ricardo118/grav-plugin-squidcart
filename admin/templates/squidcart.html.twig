@@ -60,7 +60,7 @@
         </div>
         <div id="tab-content.options.advanced3" class="tab__content {{ storedTab is same as('data.products') ? 'active' }}">
             <div class="form-tab">
-                {% set product = uri.params('product')|split(':')|last %}
+                {% set product = uri.param('product') %}
                 {% if product %}
                     {% include "partials/product.html.twig" with {id: product} %}
                 {% else %}
@@ -70,7 +70,12 @@
         </div>
         <div id="tab-content.options.advanced4" class="tab__content {{ storedTab is same as('data.customers') ? 'active' }}">
             <div class="form-tab">
-                {% include "partials/customers.html.twig" %}
+                {% set customer = uri.param('customer') %}
+                {% if customer %}
+                    {% include "customer/customer.html.twig" with {id: customer} %}
+                {% else %}
+                    {% include "partials/customers.html.twig" %}
+                {% endif %}
             </div>
         </div>
     </div>

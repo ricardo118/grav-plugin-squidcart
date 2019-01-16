@@ -8,14 +8,17 @@
         </tr>
     </thead>
     <tbody>
-        {% for customer in customers %}
-            {% set card = customer.sources.data|first %}
+    {% for customer in customers %}
+        {% set card = customer.sources.data|first %}
             <tr>
-                <td>{{ customer.email }} — {{ customer.id }}</td>
-                {#<td class="card-row">{{ card.name ?: card.brand ~ ' – ' ~ card.last4 ~ ' – ' ~ card.exp_month ~ ' / ' ~ card.exp_year }}</td>#}
+                <td>
+                    <a href="{{ uri.path }}/customer:{{ customer.id }}">
+                        {{ customer.description ? customer.description ~ ' — ' : customer.shipping.name ? customer.shipping.name ~ ' — ' }}{{ customer.email }}
+                    </a>
+                </td>
                 <td class="right">{{ customer.created|date('Y/m/d H:i') }}</td>
             </tr>
-        {% endfor %}
+    {% endfor %}
     </tbody>
 </table>
 </div>

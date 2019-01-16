@@ -1,0 +1,18 @@
+{% set customer = getCustomer(id) %}
+<div class="pure-g" id="customer">
+    <div class="pure-u-1-2 content-padding">
+        <a class="" href="{{ uri.path }}"><i class="fa fa-chevron-left"></i>back</a>
+    </div>
+    <div class="pure-u-1-2 content-padding text-right">
+        <a class="" href="https://dashboard.stripe.com/{{ squidcart.mode }}/customers/{{ id }}" target="_blank">view in stripe</a>
+    </div>
+    <div class="pure-u-1 content-padding">
+        <h1 class="my-0 px-0 py-0">{{ customer.description ? customer.description : customer.shipping.name }}  ― <a href="mailto:{{ customer.email }}" target="_blank">{{ customer.email }}</a></h1>
+    </div>
+    <div class="pure-u-1-8 content-padding pt-0 text-right"></div>
+
+    {% include 'customer/information.html.twig' %}
+    {% include 'customer/subscriptions.html.twig' %}
+    {% include 'customer/metadata.html.twig' %}
+    {% include 'customer/cards.html.twig' %}
+</div>

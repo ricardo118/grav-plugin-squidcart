@@ -1,0 +1,17 @@
+{% if customer.metadata|length > 0 %}
+<div class="details pure-u-1 content-padding pt-0">
+    <div class="details-wrapper d-block">
+        <div class="details-section">
+            <b>{{ 'PLUGIN_SQUIDCART.METADATA'|tu }}</b>
+            <div class="details-container">
+                <dl class="section-define-left">
+                    {% for key,value in customer.metadata|sArray %}
+                        <dt>{{ key }}</dt>
+                        <dd>{{ value }}</dd>
+                    {% endfor %}
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
