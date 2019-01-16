@@ -1,0 +1,17 @@
+.squidcart-icon {
+  height: 22px;
+  background-repeat: no-repeat;
+
+  &.american-express {
+    background-image: url('../../images/amex.svg');
+  }
+
+  &.visa {
+    background-image: url('../../images/visa.svg');
+  }
+
+  &.master-card {
+    background-image: url('../../images/mastercard.svg');
+  }
+
+}
