@@ -106,18 +106,6 @@ class Controller
         return $success;
     }
 
-    public function taskDelete() {
-        switch ($this->subaction) {
-            case 'sku':
-                    dump('test');
-                    return 'ble';
-                break;
-            case 'product':
-                break;
-        }
-    }
-
-
     /**
      * Redirects an action
      */
@@ -141,34 +129,6 @@ class Controller
     }
 
     /**
-     * @return array Array containing [redirect, code].
-     */
-    public function getRedirect()
-    {
-        return [$this->redirect, $this->redirectCode];
-    }
-
-    /**
-     * Prepare and return POST data.
-     *
-     * @param array $post
-     *
-     * @return array
-     */
-    protected function &getPost(array $post)
-    {
-        unset($post[$this->prefix]);
-
-        // Decode JSON encoded fields and merge them to data.
-        if (isset($post['_json'])) {
-            $post = array_merge_recursive($post, $this->jsonDecode($post['_json']));
-            unset($post['_json']);
-        }
-
-        return $post;
-    }
-
-    /**
      * Recursively JSON decode data.
      *
      * @param  array $data
@@ -186,5 +146,57 @@ class Controller
         }
 
         return $data;
+    }
+
+    /**
+     * Initialize login controller
+     */
+    public function taskController()
+    {
+        /** @var Uri $uri */
+        $uri = $this->grav['uri'];
+        $task = !empty($_POST['task']) ? $_POST['task'] : $uri->param('task');
+        $task = explode('.', $task);
+        $post = !empty($_POST) ? $_POST : [];
+        $action = $task[1];
+        $subaction = $task[2] ? $task[2] : '';
+        $id = !empty($_POST['id']) ? $_POST['id'] : $uri->param('id');
+
+        switch ($task) {
+            case 'delete.sku':
+                break;
+        }
+
+        $controller = new Controller($this->grav, $action, $subaction, $id, $post);
+        $controller->execute();
+        $controller->redirect();
+    }
+
+    // this function does nothing, currently just for keeping track of routes to be
+    protected function adminRoutes()
+    {
+        $dashboard = [
+            '/squidcart/dashboard'
+        ];
+
+        $products = [
+            '/squidcart/products',
+            '/squidcart/products/product:{product_id}',
+            '/squidcart/products/product:{product_id}/update',
+            '/squidcart/products/product:{product_id}/delete'
+        ];
+
+        $skus = [
+            '/squidcart/skus',
+            '/squidcart/skus/create',
+            '/squidcart/skus/sku:{sku_id}',
+            '/squidcart/skus/sku:{sku_id}/update',
+            '/squidcart/skus/sku:{sku_id}/delete'
+        ];
+
+        $customers = [
+            '/squidcart/customers',
+            '/squidcart/customers/customer:{customer_id}'
+        ];
     }
 }
