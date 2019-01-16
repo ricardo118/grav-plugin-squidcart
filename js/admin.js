@@ -98,8 +98,8 @@ $(document).ready(function () {
         console.log(url);
         $.ajax({
             url: url,
-        }).done(function(data) {
-            console.log(data);
+        }).done(function() {
+
         }).fail(function() {
             alert( "error" );
         });
