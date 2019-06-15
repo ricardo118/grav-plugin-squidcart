@@ -42,7 +42,7 @@ $(document).ready(function () {
         if (changes.length) {
             // return "Are you sure you want to navigate away?";
         }
-    }
+    };
 
     $('[data-modal-unsaved=save]').on('click', function (e) {
         console.log('save');

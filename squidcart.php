@@ -85,6 +85,8 @@ class SquidCartPlugin extends Plugin
                     'onAdminMenu'        => ['onAdminMenu', 0]
                 ]);
             }
+//            $order = \Stripe\Order::retrieve('or_1Dwy5SGQJIwE4bvXwpnZo0z7');
+//            $order->pay(['customer' => 'cus_EPngRK2ojm7CAa']);
         }
     }
 

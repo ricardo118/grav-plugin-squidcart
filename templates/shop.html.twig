@@ -1,0 +1,18 @@
+{% extends 'partials/base.html.twig' %}
+
+{% block body %}
+    <section id="body-wrapper" class="section blog-listing">
+        <section class="container {{ grid_size }}">
+
+            {% if show_breadcrumbs and config.plugins.breadcrumbs.enabled %}
+                {% include 'partials/breadcrumbs.html.twig' %}
+            {% endif %}
+
+            {% for product in products %}
+                {{ vardump(product) }}
+                {{ dump(product) }}
+            {% endfor %}
+
+        </section>
+    </section>
+{% endblock %}
