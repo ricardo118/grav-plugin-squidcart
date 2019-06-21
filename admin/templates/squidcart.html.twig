@@ -32,19 +32,24 @@
     <div class="form-tabs">
         <div class="tabs-nav">
             <a class="tab__link {{ storedTab is same as('data.dashboard') ? 'active' }}" data-tabid="tab-content.options.advanced1" data-tabkey="tab-content.options.advanced" data-scope="data.dashboard">
-                <span>{{ "PLUGIN_SQUIDCART.DASHBOARD"|tu }}</span>
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <span>&nbsp;{{ "PLUGIN_SQUIDCART.DASHBOARD"|tu }}</span>
             </a>
             <a class="tab__link {{ storedTab is same as('data.orders') ? 'active' }}" data-tabid="tab-content.options.advanced2" data-tabkey="tab-content.options.advanced" data-scope="data.orders">
-                <span>{{ "PLUGIN_SQUIDCART.ORDERS"|tu }}</span>
+                <i class="fa fa-credit-card" aria-hidden="true"></i>
+                <span>&nbsp;{{ "PLUGIN_SQUIDCART.ORDERS"|tu }}</span>
             </a>
             <a class="tab__link {{ storedTab is same as('data.products') ? 'active' }}" data-tabid="tab-content.options.advanced3" data-tabkey="tab-content.options.advanced" data-scope="data.products">
-                <span>{{ "PLUGIN_SQUIDCART.PRODUCTS"|tu }}</span>
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                <span>&nbsp;{{ "PLUGIN_SQUIDCART.PRODUCTS"|tu }}</span>
             </a>
             <a class="tab__link {{ storedTab is same as('data.customers') ? 'active' }}" data-tabid="tab-content.options.advanced4" data-tabkey="tab-content.options.advanced" data-scope="data.customers">
-                <span>{{ "PLUGIN_SQUIDCART.CUSTOMERS"|tu }}</span>
+                <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                <span>&nbsp;{{ "PLUGIN_SQUIDCART.CUSTOMERS"|tu }}</span>
             </a>
             <a class="tab__link {{ storedTab is same as('data.coupons') ? 'active' }}" data-tabid="tab-content.options.advanced5" data-tabkey="tab-content.options.advanced" data-scope="data.coupons">
-                <span>{{ "PLUGIN_SQUIDCART.COUPONS"|tu }}</span>
+                <i class="fa fa-tags" aria-hidden="true"></i>
+                <span>&nbsp;{{ "PLUGIN_SQUIDCART.COUPONS"|tu }}</span>
             </a>
         </div>
 {% endblock %}
