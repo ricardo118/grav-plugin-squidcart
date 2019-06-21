@@ -45,6 +45,8 @@ class Customers
             } catch (Api $e) {
                 dump($e);
             }
+        } else {
+            $this->grav['debugger']->addMessage('Customers cache hit.');
         }
 
         $this->cache->save('squidcart_customers', $data, $this->expiration);

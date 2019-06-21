@@ -46,6 +46,8 @@ class Products
             } catch (Api $e) {
                 dump($e->getJsonBody());
             }
+        } else {
+            $this->grav['debugger']->addMessage('Products cache hit.');
         }
 
         $this->cache->save('squidcart_products', $data, $this->expiration);

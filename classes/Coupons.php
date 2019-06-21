@@ -44,6 +44,8 @@ class Coupons
             } catch (Api $e) {
                 dump($e);
             }
+        } else {
+            $this->grav['debugger']->addMessage('Coupons cache hit.');
         }
 
         $this->cache->save('squidcart_coupons', $data, $this->expiration);

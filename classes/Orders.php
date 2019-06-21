@@ -46,6 +46,8 @@ class Orders
             } catch (Api $e) {
                 dump($e);
             }
+        } else {
+            $this->grav['debugger']->addMessage('Orders cache hit.');
         }
 
         $this->cache->save('squidcart_orders', $data, $this->expiration);
