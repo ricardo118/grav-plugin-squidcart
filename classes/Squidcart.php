@@ -20,6 +20,7 @@ class Squidcart
         require_once __DIR__ . '/Orders.php';
         require_once __DIR__ . '/Products.php';
         require_once __DIR__ . '/Customers.php';
+        require_once __DIR__ . '/Coupons.php';
     }
 
     /**

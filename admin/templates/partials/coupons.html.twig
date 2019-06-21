@@ -1,0 +1,30 @@
+<div class="content-padding">
+<table>
+    <thead>
+        <tr>
+            <td>{{ 'PLUGIN_SQUIDCART.COUPON'|t|upper }}</td>
+            <td>{{ 'PLUGIN_SQUIDCART.TERMS'|t|upper }}</td>
+            <td class="right">{{ 'PLUGIN_SQUIDCART.REDEMPTIONS'|t|upper }}</td>
+            <td>{{ 'PLUGIN_SQUIDCART.EXPIRES'|t|upper }}</td>
+        </tr>
+    </thead>
+    <tbody>
+    {% for coupon in coupons %}
+        <tr>
+            <td>
+                <a href="{{ uri.path }}/coupon:{{ coupon.id }}">
+                    {{ coupon.name }}
+                </a>
+            </td>
+            {% if coupon.amount_off %}
+                <td>{{ coupon.amount_off|price }} {{ 'PLUGIN_SQUIDCART.DISCOUNT'|t }} {{ coupon.duration_in_months ? 'PLUGIN_SQUIDCART.FOR_MONTHS'|tu|format(coupon.duration_in_months) : ('PLUGIN_SQUIDCART.' ~ coupon.duration)|upper|t }}</td>
+            {% else %}
+                <td>{{ coupon.percent_off }}% {{ 'PLUGIN_SQUIDCART.DISCOUNT'|t }} {{ coupon.duration_in_months ? 'PLUGIN_SQUIDCART.FOR_MONTHS'|tu|format(coupon.duration_in_months) : ('PLUGIN_SQUIDCART.' ~ coupon.duration)|upper|t }}</td>
+            {% endif %}
+            <td class="right">{{ coupon.times_redeemed }}{{ coupon.max_redemptions ? '/' ~ coupon.max_redemptions }}</td>
+            <td>{{ coupon.redeem_by ? coupon.redeem_by|date('M d, Y, H:i') : '—' }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>

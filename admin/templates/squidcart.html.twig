@@ -43,6 +43,9 @@
             <a class="tab__link {{ storedTab is same as('data.customers') ? 'active' }}" data-tabid="tab-content.options.advanced4" data-tabkey="tab-content.options.advanced" data-scope="data.customers">
                 <span>{{ "PLUGIN_SQUIDCART.CUSTOMERS"|tu }}</span>
             </a>
+            <a class="tab__link {{ storedTab is same as('data.coupons') ? 'active' }}" data-tabid="tab-content.options.advanced5" data-tabkey="tab-content.options.advanced" data-scope="data.coupons">
+                <span>{{ "PLUGIN_SQUIDCART.COUPONS"|tu }}</span>
+            </a>
         </div>
 {% endblock %}
 
@@ -75,6 +78,16 @@
                     {% include "customer/customer.html.twig" with {id: customer} %}
                 {% else %}
                     {% include "partials/customers.html.twig" %}
+                {% endif %}
+            </div>
+        </div>
+        <div id="tab-content.options.advanced5" class="tab__content {{ storedTab is same as('data.coupons') ? 'active' }}">
+            <div class="form-tab">
+                {% set customer = uri.param('coupon') %}
+                {% if customer %}
+                    {% include "coupons/coupon.html.twig" with {id: coupon} %}
+                {% else %}
+                    {% include "partials/coupons.html.twig" %}
                 {% endif %}
             </div>
         </div>

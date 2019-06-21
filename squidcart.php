@@ -8,6 +8,7 @@ use Grav\Plugin\SquidCart\Controller;
 use Grav\Plugin\SquidCart\Customers;
 use Grav\Plugin\SquidCart\Orders;
 use Grav\Plugin\SquidCart\Products;
+use Grav\Plugin\Squidcart\Coupons;
 use Grav\Plugin\Squidcart\Squidcart;
 use Grav\Plugin\Squidcart\Twig\SquidcartTwigExtension;
 use Stripe\Stripe;
@@ -40,6 +41,11 @@ class SquidCartPlugin extends Plugin
     protected $products;
 
     /**
+     * @var Coupons
+     */
+    protected $coupons;
+
+    /**
      * @var Stripe
      */
     protected $stripe;
@@ -67,7 +73,6 @@ class SquidCartPlugin extends Plugin
     {
         $this->getConfigs();
 
-        // Check we are setup
         if ($this->setup())
         {
             $this->initializeSquidcart();
@@ -82,11 +87,9 @@ class SquidCartPlugin extends Plugin
             if ($this->isAdmin())
             {
                 $this->enable([
-                    'onAdminMenu'        => ['onAdminMenu', 0]
+                    'onAdminMenu' => ['onAdminMenu', 0]
                 ]);
             }
-//            $order = \Stripe\Order::retrieve('or_1Dwy5SGQJIwE4bvXwpnZo0z7');
-//            $order->pay(['customer' => 'cus_EPngRK2ojm7CAa']);
         }
     }
 
@@ -127,6 +130,7 @@ class SquidCartPlugin extends Plugin
         $this->orders    = new Orders    ($this->stripe, $this->configs);
         $this->customers = new Customers ($this->stripe, $this->configs);
         $this->products  = new Products  ($this->stripe, $this->configs);
+        $this->coupons   = new Coupons   ($this->stripe, $this->configs);
     }
 
     /**
@@ -176,6 +180,7 @@ class SquidCartPlugin extends Plugin
         $twig->twig_vars['squidcart']['mode'] = $this->configs['mode'];
         $twig->twig_vars['squidcart']['currency'] = $this->configs['currency'];
         $twig->twig_vars['products'] = $this->products->getProducts();
+        $twig->twig_vars['coupons'] = $this->coupons->getCoupons();
 
         if ($this->isAdmin())
         {
