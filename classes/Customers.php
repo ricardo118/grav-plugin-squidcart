@@ -67,4 +67,19 @@ class Customers
         }
         return $customer;
     }
+
+    public function deleteSource($id, $card)
+    {
+        $api = new Customer();
+        $api::deleteSource($id, $card);
+        $this->clearCache();
+        $this->getCustomers();
+
+        return true;
+    }
+
+    protected function clearCache()
+    {
+        $this->cache->delete('squidcart_customers');
+    }
 }

@@ -90,11 +90,18 @@ $(document).ready(function () {
 
     $('[data-action]').on('click', function (e) {
         e.preventDefault();
-        let target = $(this);
-        let action = target.data('action');
-        let id = target.data('id');
-        let href = target.attr('href');
-        let url = `${href}/action:squidcart.${action}/id:${id}`;
+        const target = $(this);
+        const href = target.attr('href');
+        const data = target.data();
+        const action = target.data('action');
+        let url = `${href}/action:squidcart.${action}/`;
+        delete data.action;
+
+        $.each(data, function (key, val) {
+            const param = `${key}:${val}/`;
+            url = url + param;
+        });
+
         console.log(url);
         $.ajax({
             url: url,

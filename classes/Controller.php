@@ -8,6 +8,7 @@ use Grav\Common\Uri;
 use Grav\Common\User\User;
 use Grav\Common\Utils;
 use RocketTheme\Toolbox\Session\Message;
+use Stripe\Stripe;
 
 /**
  * Class Controller
@@ -21,24 +22,23 @@ class Controller
     public $grav;
 
     /**
-     * @var string
+     * @var Stripe
      */
-    public $action;
+    public $stripe;
 
     /**
      * @var string
      */
+    public $type;
+    public $object;
     public $subaction;
-
-    /**
-     * @var string
-     */
-    public $id;
 
     /**
      * @var array
      */
+    protected $params;
     public $post;
+    protected $config;
 
     /**
      * @var string
@@ -56,18 +56,22 @@ class Controller
     protected $prefix = 'task';
 
     /**
-     * @param Grav   $grav
-     * @param string $action
+     * @param Stripe $stripe
+     * @param string $type
+     * @param string $object
      * @param string $subaction
-     * @param string $id
+     * @param array  $params
      * @param array  $post
      */
-    public function __construct(Grav $grav, $action, $subaction, $id, $post = null)
+    public function __construct(Stripe $stripe, $type, $object, $subaction = null, $params = null, $post = null)
     {
-        $this->grav = $grav;
-        $this->action = $action;
+        $this->grav = Grav::instance();
+        $this->config = $this->grav['config']->get('plugins.squidcart');
+        $this->stripe = $stripe;
+        $this->type = $type;
+        $this->object = $object;
         $this->subaction = $subaction;
-        $this->id = $id;
+        $this->params = $params;
         $this->post = $post ? $this->getPost($post) : [];
     }
 
@@ -86,7 +90,7 @@ class Controller
         }
 
         $success = false;
-        $method = $this->prefix . ucfirst($this->action);
+        $method = $this->prefix . ucfirst($this->type);
 
         if (!method_exists($this, $method)) {
             throw new \RuntimeException($method, 404);
@@ -148,29 +152,35 @@ class Controller
         return $data;
     }
 
-    /**
-     * Initialize login controller
-     */
-    public function taskController()
-    {
-        /** @var Uri $uri */
-        $uri = $this->grav['uri'];
-        $task = !empty($_POST['task']) ? $_POST['task'] : $uri->param('task');
-        $task = explode('.', $task);
-        $post = !empty($_POST) ? $_POST : [];
-        $action = $task[1];
-        $subaction = $task[2] ? $task[2] : '';
-        $id = !empty($_POST['id']) ? $_POST['id'] : $uri->param('id');
+    protected function taskDelete() {
 
-        switch ($task) {
-            case 'delete.sku':
+        $messages = $this->grav['messages'];
+
+        switch ($this->object)
+        {
+            case 'customers':
+                $customers = new Customers($this->stripe, $this->config);
+
+                if ($this->subaction)
+                {
+                    switch ($this->subaction) {
+                        case 'sources':
+                            try {
+                                $customers->deleteSource($this->params['customers'], $this->params['card']);
+                            } catch (\RuntimeException $e) {
+                                $messages->add($e->getMessage(), 'error');
+                                $this->grav['log']->error('plugin.squidcart: '. $e->getMessage());
+                            }
+//                            finally {
+//                                $this->grav->redirect($this->redirect, $this->redirectCode);
+//                            }
+                            break;
+                    }
+                }
                 break;
         }
-
-        $controller = new Controller($this->grav, $action, $subaction, $id, $post);
-        $controller->execute();
-        $controller->redirect();
     }
+
 
     // this function does nothing, currently just for keeping track of routes to be
     protected function adminRoutes()

@@ -3,6 +3,7 @@ namespace Grav\Plugin;
 
 use Grav\Common\Page\Page;
 use Grav\Common\Plugin;
+use Grav\Common\Uri;
 use Grav\Common\Utils;
 use Grav\Plugin\SquidCart\Controller;
 use Grav\Plugin\SquidCart\Customers;
@@ -46,6 +47,11 @@ class SquidCartPlugin extends Plugin
     protected $coupons;
 
     /**
+     * @var Controller
+     */
+    protected $controller;
+
+    /**
      * @var Stripe
      */
     protected $stripe;
@@ -62,7 +68,11 @@ class SquidCartPlugin extends Plugin
     public static function getSubscribedEvents()
     {
         return [
-            'onPluginsInitialized' => ['onPluginsInitialized', 0]
+            'onPluginsInitialized'           => ['onPluginsInitialized', 0],
+            'onAction.squidcart.delete.sku'  => ['actionController', 0],
+            'onAction.squidcart.delete.customers.card'  => ['actionController', 0],
+            'onAction.squidcart.create.customers.card'  => ['actionController', 0],
+            'onAction.squidcart.update.customers.card'  => ['actionController', 0],
         ];
     }
 
@@ -133,6 +143,29 @@ class SquidCartPlugin extends Plugin
         $this->customers = new Customers ($this->stripe, $this->configs);
         $this->products  = new Products  ($this->stripe, $this->configs);
         $this->coupons   = new Coupons   ($this->stripe, $this->configs);
+    }
+
+    /**
+     * Initialize controller
+     */
+    public function actionController()
+    {
+        /** @var Uri $uri */
+        $uri = $this->grav['uri'];
+        $params = $uri->params(null, true);
+        unset($params['admin-nonce'], $params['action']);
+
+        $action = !empty($_POST['action']) ? $_POST['action'] : $uri->param('action');
+        $subaction = !empty($_POST['subaction']) ? $_POST['subaction'] : $uri->param('subaction');
+        $action = explode('.', $action);
+        $type = $action[1];
+        $object = $action[2];
+
+        $post = !empty($_POST) ? $_POST : [];
+
+        $controller = new Controller($this->stripe, $type, $object, $subaction, $params, $post);
+        $controller->execute();
+        $controller->redirect();
     }
 
     /**
