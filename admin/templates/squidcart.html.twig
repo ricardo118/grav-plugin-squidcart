@@ -10,7 +10,7 @@
 {% set slug = uri.basename|e %}
 {% set body_classes = 'squidcart' %}
 {% set storedValue = get_cookie('grav-tabs-state')|default('{}')|json_decode %}
-{% set storedTab = attribute(storedValue, 'tab-content.options.advanced') %}
+{% set storedTab = attribute(storedValue, 'squidcart-tabs') %}
 
 {% block titlebar %}
     <div class="button-bar">
@@ -31,23 +31,23 @@
 {% block content_top %}
     <div class="form-tabs">
         <div class="tabs-nav">
-            <a class="tab__link {{ storedTab is same as('data.dashboard') ? 'active' }}" data-tabid="tab-content.options.advanced1" data-tabkey="tab-content.options.advanced" data-scope="data.dashboard">
+            <a class="tab__link {{ storedTab is same as('data.dashboard') ? 'active' }}" data-tabid="squidcart-tabs.dashboard" data-tabkey="squidcart-tabs" data-scope="data.dashboard">
                 <i class="fa fa-home" aria-hidden="true"></i>
                 <span>&nbsp;{{ "PLUGIN_SQUIDCART.DASHBOARD"|tu }}</span>
             </a>
-            <a class="tab__link {{ storedTab is same as('data.orders') ? 'active' }}" data-tabid="tab-content.options.advanced2" data-tabkey="tab-content.options.advanced" data-scope="data.orders">
+            <a class="tab__link {{ storedTab is same as('data.orders') ? 'active' }}" data-tabid="squidcart-tabs.orders" data-tabkey="squidcart-tabs" data-scope="data.orders">
                 <i class="fa fa-credit-card" aria-hidden="true"></i>
                 <span>&nbsp;{{ "PLUGIN_SQUIDCART.ORDERS"|tu }}</span>
             </a>
-            <a class="tab__link {{ storedTab is same as('data.products') ? 'active' }}" data-tabid="tab-content.options.advanced3" data-tabkey="tab-content.options.advanced" data-scope="data.products">
+            <a class="tab__link {{ storedTab is same as('data.products') ? 'active' }}" data-tabid="squidcart-tabs.products" data-tabkey="squidcart-tabs" data-scope="data.products">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                 <span>&nbsp;{{ "PLUGIN_SQUIDCART.PRODUCTS"|tu }}</span>
             </a>
-            <a class="tab__link {{ storedTab is same as('data.customers') ? 'active' }}" data-tabid="tab-content.options.advanced4" data-tabkey="tab-content.options.advanced" data-scope="data.customers">
+            <a class="tab__link {{ storedTab is same as('data.customers') ? 'active' }}" data-tabid="squidcart-tabs.customers" data-tabkey="squidcart-tabs" data-scope="data.customers">
                 <i class="fa fa-id-card-o" aria-hidden="true"></i>
                 <span>&nbsp;{{ "PLUGIN_SQUIDCART.CUSTOMERS"|tu }}</span>
             </a>
-            <a class="tab__link {{ storedTab is same as('data.coupons') ? 'active' }}" data-tabid="tab-content.options.advanced5" data-tabkey="tab-content.options.advanced" data-scope="data.coupons">
+            <a class="tab__link {{ storedTab is same as('data.coupons') ? 'active' }}" data-tabid="squidcart-tabs.coupons" data-tabkey="squidcart-tabs" data-scope="data.coupons">
                 <i class="fa fa-tags" aria-hidden="true"></i>
                 <span>&nbsp;{{ "PLUGIN_SQUIDCART.COUPONS"|tu }}</span>
             </a>
@@ -56,17 +56,17 @@
 
 {% block content %}
     <div id="squidcart-content" class="tabs-content">
-        <div id="tab-content.options.advanced1" class="tab__content  {{ storedTab is same as('data.dashboard') ? 'active' }}">
+        <div id="squidcart-tabs.dashboard" class="tab__content  {{ storedTab is same as('data.dashboard') ? 'active' }}">
             <div class="form-tab">
                 {% include "partials/dashboard.html.twig" %}
             </div>
         </div>
-        <div id="tab-content.options.advanced2" class="tab__content {{ storedTab is same as('data.orders') ? 'active' }}">
+        <div id="squidcart-tabs.orders" class="tab__content {{ storedTab is same as('data.orders') ? 'active' }}">
             <div class="form-tab">
                 {% include "partials/orders.html.twig" %}
             </div>
         </div>
-        <div id="tab-content.options.advanced3" class="tab__content {{ storedTab is same as('data.products') ? 'active' }}">
+        <div id="squidcart-tabs.products" class="tab__content {{ storedTab is same as('data.products') ? 'active' }}">
             <div class="form-tab">
                 {% set product = uri.param('product') %}
                 {% if product %}
@@ -76,7 +76,7 @@
                 {% endif %}
             </div>
         </div>
-        <div id="tab-content.options.advanced4" class="tab__content {{ storedTab is same as('data.customers') ? 'active' }}">
+        <div id="squidcart-tabs.customers" class="tab__content {{ storedTab is same as('data.customers') ? 'active' }}">
             <div class="form-tab">
                 {% set customer = uri.param('customer') %}
                 {% if customer %}
@@ -86,7 +86,7 @@
                 {% endif %}
             </div>
         </div>
-        <div id="tab-content.options.advanced5" class="tab__content {{ storedTab is same as('data.coupons') ? 'active' }}">
+        <div id="squidcart-tabs.coupons" class="tab__content {{ storedTab is same as('data.coupons') ? 'active' }}">
             <div class="form-tab">
                 {% set coupon = uri.param('coupon') %}
                 {% if coupon %}
