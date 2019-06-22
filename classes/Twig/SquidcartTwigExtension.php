@@ -2,10 +2,10 @@
 namespace Grav\Plugin\Squidcart\Twig;
 
 use Grav\Common\Grav;
+use Grav\Plugin\SquidCart\Coupons;
 use Grav\Plugin\SquidCart\Customers;
 use Grav\Plugin\Squidcart\Products;
 use Stripe\StripeObject;
-use Stripe\Util\Util;
 use Twig_Extension;
 
 class SquidcartTwigExtension extends Twig_Extension
@@ -40,7 +40,8 @@ class SquidcartTwigExtension extends Twig_Extension
     {
         return [
             new \Twig_SimpleFunction('getProduct', [$this, 'getProduct']),
-            new \Twig_SimpleFunction('getCustomer', [$this, 'getCustomer'])
+            new \Twig_SimpleFunction('getCustomer', [$this, 'getCustomer']),
+            new \Twig_SimpleFunction('getCoupon', [$this, 'getCoupon'])
         ];
     }
 
@@ -77,6 +78,13 @@ class SquidcartTwigExtension extends Twig_Extension
         require_once __DIR__ . '/../Customers.php';
         $customers = new Customers($this->stripe, $this->configs);
         return $customers->getCustomer($id);
+    }
+
+    public function getCoupon($id)
+    {
+        require_once __DIR__ . '/../Coupons.php';
+        $coupons = new Coupons($this->stripe, $this->configs);
+        return $coupons->getCoupon($id);
     }
 
     /**

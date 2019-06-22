@@ -1,7 +1,7 @@
 {% for payout in dashboard.payout.data %}
     {{ payout.amount|price }}</br>
 {% endfor %}
-{{ dump(dashboard.payout) }}
+{#{{ dump(dashboard.payout) }}#}
 
 <h1>on the way to your bank</h1>
 {% set balance = 0 %}

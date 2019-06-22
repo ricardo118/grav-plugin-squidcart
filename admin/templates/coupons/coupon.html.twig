@@ -1,18 +1,32 @@
-{% set customer = getCustomer(id) %}
-<div class="pure-g" id="customer">
+{% set coupon = getCoupon(id) %}
+<div class="pure-g" id="coupon">
     <div class="pure-u-1-2 content-padding">
-        <a class="" href="{{ uri.path }}"><i class="fa fa-chevron-left"></i>back</a>
+        <a class="" href="{{ uri.path }}"><i class="fa fa-chevron-left"></i> {{ 'PLUGIN_SQUIDCART.BACK'|tu }}</a>
     </div>
     <div class="pure-u-1-2 content-padding text-right">
-        <a class="" href="https://dashboard.stripe.com/{{ squidcart.mode }}/customers/{{ id }}" target="_blank">view in stripe</a>
+        <a class="" href="https://dashboard.stripe.com/{{ squidcart.mode }}/coupons/{{ id }}" target="_blank">{{ 'PLUGIN_SQUIDCART.IN_STRIPE'|tu }}</a>
     </div>
-    <div class="pure-u-1 content-padding">
-        <h1 class="my-0 px-0 py-0">{{ customer.description ? customer.description : customer.shipping.name }}  ― <a href="mailto:{{ customer.email }}" target="_blank">{{ customer.email }}</a></h1>
+    <div class="pure-u-1 content-padding pb-0">
+        <h1 class="my-0 px-0 py-0">{{ coupon.name|upper }} ― <span class="text-grey">{{ coupon.id }}</span></h1>
     </div>
-    <div class="pure-u-1-8 content-padding pt-0 text-right"></div>
+    <div class="pure-u-1-5 content-padding py-0 bg-light-grey separator-right">
+        <h6 class="text-bold text-dark">{{ 'PLUGIN_SQUIDCART.TERMS'|tu }}</h6>
+        <p>
+        {% if coupon.amount_off %}
+            {{ coupon.amount_off|price }} {{ 'PLUGIN_SQUIDCART.DISCOUNT'|tu }} {{ coupon.duration_in_months ? 'PLUGIN_SQUIDCART.FOR_MONTHS'|tu|format(coupon.duration_in_months) : ('PLUGIN_SQUIDCART.' ~ coupon.duration)|upper|tu }}
+        {% else %}
+            {{ coupon.percent_off }}% {{ 'PLUGIN_SQUIDCART.DISCOUNT'|tu }} {{ coupon.duration_in_months ? 'PLUGIN_SQUIDCART.FOR_MONTHS'|tu|format(coupon.duration_in_months) : ('PLUGIN_SQUIDCART.' ~ coupon.duration)|upper|tu }}
+        {% endif %}
+        </p>
+    </div>
+    <div class="pure-u-4-5 content-padding py-0 bg-light-grey">
+        <h6 class="text-bold text-dark">{{ 'PLUGIN_SQUIDCART.USAGE'|tu }}</h6>
+        <p>
+            {{ coupon.times_redeemed }}{{ coupon.max_redemptions ? '/' ~ coupon.max_redemptions }}
+            {{ 'PLUGIN_SQUIDCART.REDEMPTIONS'|tu }}
+        </p>
+    </div>
+    <div class="pure-u-1 content-padding pt-0"></div>
 
-    {% include 'customer/information.html.twig' %}
-    {% include 'customer/subscriptions.html.twig' %}
-    {% include 'customer/metadata.html.twig' %}
-    {% include 'customer/cards.html.twig' %}
+    {% include 'coupons/information.html.twig' %}
 </div>

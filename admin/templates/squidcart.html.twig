@@ -88,8 +88,8 @@
         </div>
         <div id="tab-content.options.advanced5" class="tab__content {{ storedTab is same as('data.coupons') ? 'active' }}">
             <div class="form-tab">
-                {% set customer = uri.param('coupon') %}
-                {% if customer %}
+                {% set coupon = uri.param('coupon') %}
+                {% if coupon %}
                     {% include "coupons/coupon.html.twig" with {id: coupon} %}
                 {% else %}
                     {% include "partials/coupons.html.twig" %}

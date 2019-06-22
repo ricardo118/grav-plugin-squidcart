@@ -1,0 +1,50 @@
+<div class="details pure-u-1 content-padding pt-0">
+    <div class="details-wrapper d-block">
+        <div class="details-section">
+            <b>{{ 'PLUGIN_SQUIDCART.DETAILS'|tu }}</b>
+            <div class="details-container">
+                <div class="section-define-left">
+                    <dl class="">
+                        <dt>{{ 'PLUGIN_SQUIDCART.ID'|tu }}</dt>
+                        <dd class="text-gray">{{ coupon.id }}</dd>
+                        <dt>{{ 'PLUGIN_SQUIDCART.NAME'|tu }}</dt>
+                        <dd>{{ coupon.name }}</dd>
+                        <dt>{{ 'PLUGIN_SQUIDCART.CREATED'|tu|capitalize }}</dt>
+                        <dd>{{ coupon.created|date('M d, Y') }}</dd>
+                    </dl>
+                </div>
+                <div class="section-define-right">
+                    <dl class="">
+
+                        <dt>{{ 'PLUGIN_SQUIDCART.VALID'|tu }}</dt>
+                        <dd>{{ coupon.valid ? 'PLUGIN_SQUIDCART._YES'|tu : 'PLUGIN_SQUIDCART._NO'|tu }}</dd>
+
+                        {% if coupon.amount_off %}
+                            <dt>{{ 'PLUGIN_SQUIDCART.FIXED_DISCOUNT'|tu|capitalize }}</dt>
+                            <dd>{{ coupon.amount_off }}</dd>
+                        {% else %}
+                            <dt>{{ 'PLUGIN_SQUIDCART.PERCENTAGE_DISCOUNT'|tu|capitalize }}</dt>
+                            <dd>{{ coupon.percent_off }}%</dd>
+                        {% endif %}
+
+                        <dt>{{ 'PLUGIN_SQUIDCART.DURATION'|tu }}</dt>
+                        <dd>{{ coupon.duration_in_months ? 'PLUGIN_SQUIDCART.X_MONTHS'|tu|format(coupon.duration_in_months) : ('PLUGIN_SQUIDCART.' ~ coupon.duration)|upper|tu|capitalize }}</dd>
+
+                        {% if coupon.max_redemptions %}
+                            <dt>{{ 'PLUGIN_SQUIDCART.REDEMPTIONS'|tu }}</dt>
+                            <dd>{{ coupon.max_redemptions }}</dd>
+                        {% endif %}
+
+                        {% if coupon.redeem_by %}
+                            <dt>{{ 'PLUGIN_SQUIDCART.EXPIRES_ON'|tu }}</dt>
+                            <dd>{{ coupon.redeem_by|date('M d, Y') }}</dd>
+                        {% endif %}
+
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ dump(coupon) }}

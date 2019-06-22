@@ -52,18 +52,17 @@ class Coupons
         return $data;
     }
 
-    public function getCustomer(String $id)
+    public function getCoupon(String $id)
     {
-        $data = $this->getCustomers();
-        $customer = [];
-
+        $data = $this->getCoupons();
+        $coupon = [];
         foreach ($data as $item)
         {
             if ($item['id'] === $id) {
-                $customer = $item;
-                return $customer;
+                $coupon = $item;
+                return $coupon;
             }
         }
-        return $customer;
+        return $coupon;
     }
 }
