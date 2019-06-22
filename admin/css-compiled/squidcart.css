@@ -68,28 +68,26 @@
             padding: 0 15px 0 13px;
             line-height: 22px;
             text-align: right;
-            width: 30%; }
+            width: 35%; }
           .squidcart .details .details-wrapper .details-section .details-container dd {
             color: #000000;
             min-height: 22px;
             line-height: 22px;
             word-wrap: break-word;
             overflow: hidden;
-            margin-left: 30%; }
+            margin-left: 35%; }
   .squidcart .rounded {
     border-radius: 7%; }
   .squidcart .d-block {
     display: block !important; }
-  .squidcart .text-right {
-    text-align: right; }
-  .squidcart .spacing {
-    letter-spacing: 1px; }
-  .squidcart .no-wrap {
-    white-space: nowrap !important; }
   .squidcart .no-border {
     border: none !important; }
   .squidcart .bt {
     border-top: 1px solid #e3e3e3 !important; }
+  .squidcart .bg-light-grey {
+    background-color: #F6F6F6; }
+  .squidcart .separator-right {
+    box-shadow: inset -1px 0 #e3e3e3; }
   .squidcart .m-0 {
     margin: 0 !important; }
   .squidcart .mb-0 {
@@ -302,6 +300,27 @@
     background-image: url("../../images/visa.svg"); }
   .squidcart-icon.master-card {
     background-image: url("../../images/mastercard.svg"); }
+
+.text-right {
+  text-align: right; }
+
+.spacing {
+  letter-spacing: 1px; }
+
+.no-wrap {
+  white-space: nowrap !important; }
+
+.text-bold {
+  font-weight: bold; }
+
+.text-dark, .text-black {
+  color: #000000; }
+
+.text-light-gray {
+  color: #e3e3e3 !important; }
+
+.text-gray {
+  color: #B7B9BD !important; }
 
 .squidcart #admin-main table thead {
   background-color: #414147;

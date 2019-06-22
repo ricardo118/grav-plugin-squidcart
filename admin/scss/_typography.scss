@@ -1,0 +1,26 @@
+.text-right {
+  text-align: right;
+}
+
+.spacing {
+  letter-spacing: 1px;
+}
+
+.no-wrap {
+  white-space: nowrap !important;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.text-dark, .text-black {
+  color: $black;
+}
+
+.text-light-gray {
+  color: $light-gray !important;
+}
+.text-gray {
+  color: $gray !important;
+}

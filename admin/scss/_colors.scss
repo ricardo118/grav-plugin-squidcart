@@ -9,6 +9,8 @@ $nav-hover-link:                #ffffff !default;
 
 $white:                         #ffffff !default;
 $black:                         #000000 !default;
+$light-gray:                    #e3e3e3 !default;
+$gray:                          #B7B9BD !default;
 
 // Toolbar
 $toolbar-bg:                    #ffffff !default;
@@ -25,7 +27,7 @@ $content-text:                  #6f7b8a !default;
 $content-link:                  #0090D9 !default;
 $content-link2:                 #da4b46 !default;
 $content-header:                #414147 !default;
-$content-tabs-bg:               #e3e3e3 !default;
+$content-tabs-bg:               $light-gray;
 $content-tabs-text:             #808080 !default;
 
 // Buttons

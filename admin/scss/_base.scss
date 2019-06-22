@@ -97,7 +97,7 @@
             padding: 0 15px 0 13px;
             line-height: 22px;
             text-align: right;
-            width: 30%;
+            width: 35%;
           }
           dd {
             color: $black;
@@ -105,7 +105,7 @@
             line-height: 22px;
             word-wrap: break-word;
             overflow: hidden;
-            margin-left: 30%;
+            margin-left: 35%;
           }
         }
       }
@@ -118,22 +118,21 @@
   .d-block {
     display: block !important;
   }
-  .text-right {
-    text-align: right;
-  }
-  .spacing {
-    letter-spacing: 1px;
-  }
 
-  .no-wrap {
-    white-space: nowrap !important;
-  }
   .no-border {
     border: none !important;
   }
 
   .bt {
     border-top:1px solid $content-tabs-bg !important;
+  }
+
+  .bg-light-grey {
+    background-color: $page-bg;
+  }
+
+  .separator-right {
+    box-shadow: inset -1px 0 $content-tabs-bg;
   }
 
   // Spacing
