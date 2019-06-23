@@ -105,10 +105,10 @@ $(document).ready(function () {
         console.log(url);
         $.ajax({
             url: url,
-        }).done(function() {
-
-        }).fail(function() {
-            alert( "error" );
+        }).done(function(data) {
+            console.log(data);
+        }).fail(function(data) {
+            alert(data);
         });
     });
 });

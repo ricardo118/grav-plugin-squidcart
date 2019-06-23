@@ -4,7 +4,8 @@ namespace Grav\Plugin\SquidCart;
 
 use Grav\Common\Grav;
 use Stripe\Customer;
-use Stripe\Error\Api;
+use Stripe\Error\Card;
+use Stripe\Error\InvalidRequest;
 use Stripe\Stripe;
 
 class Customers
@@ -68,10 +69,35 @@ class Customers
         return $customer;
     }
 
+    /**
+     * @param $id
+     * @param $card
+     * @return bool
+     */
     public function deleteSource($id, $card)
     {
+        $messages = $this->grav['messages'];
         $api = new Customer();
-        $api::deleteSource($id, $card);
+
+        try {
+            $api::deleteSource($id, $card);
+        } catch (Card $e) {
+            $messages->add($e->getMessage(), 'error');
+            $this->grav['log']->error('plugin.squidcart: '. $e->getMessage());
+        }
+        catch (InvalidRequest $e) {
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+
+            dump('Status is:' . $e->getHttpStatus() . "\n");
+            dump('Type is:' . $err['type'] . "\n");
+            dump('Code is:' . $err['code'] . "\n");
+            // param is '' in this case
+            dump('Param is:' . $err['param'] . "\n");
+            dump('Message is:' . $err['message'] . "\n");
+            $messages->add($e->getMessage(), 'error');
+            $this->grav['log']->error('plugin.squidcart: '. $e->getMessage());
+        }
         $this->clearCache();
         $this->getCustomers();
 

@@ -154,8 +154,6 @@ class Controller
 
     protected function taskDelete() {
 
-        $messages = $this->grav['messages'];
-
         switch ($this->object)
         {
             case 'customers':
@@ -165,15 +163,7 @@ class Controller
                 {
                     switch ($this->subaction) {
                         case 'sources':
-                            try {
                                 $customers->deleteSource($this->params['customers'], $this->params['card']);
-                            } catch (\RuntimeException $e) {
-                                $messages->add($e->getMessage(), 'error');
-                                $this->grav['log']->error('plugin.squidcart: '. $e->getMessage());
-                            }
-//                            finally {
-//                                $this->grav->redirect($this->redirect, $this->redirectCode);
-//                            }
                             break;
                     }
                 }
