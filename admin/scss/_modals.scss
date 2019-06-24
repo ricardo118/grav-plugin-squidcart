@@ -7,7 +7,7 @@
     left: 50%;
     transform: translateX(-50%);
 
-    #modal-unsaved, #modal-action {
+    .modal {
       background: $content-tabs-bg;
       padding: 10px;
       color: $content-header;
@@ -15,6 +15,7 @@
       border-radius: 5px;
       @include animation(0, 0.7s, slideInUp);
       border: 1px solid black;
+      display: flex;
 
       p {
         display: inline-block;
@@ -22,8 +23,7 @@
       }
 
       .actions {
-        display: inline-block;
-        float: right;
+        align-self: center;
 
         a {
           vertical-align: middle;
@@ -47,4 +47,33 @@
       }
     }
   }
+
+  .modal-action-wrapper {
+    background: none !important;
+
+    &.success, &.error {
+      .modal {
+        color: $white;
+
+        .actions {
+          a {
+            color: $light-gray;
+          }
+        }
+      }
+    }
+
+    &.success {
+      .modal {
+        background: $notice-bg;
+      }
+    }
+
+    &.error {
+      .modal {
+        background: $critical-bg;
+      }
+    }
+  }
+
 }

@@ -85,9 +85,10 @@ class Customers
     {
         $lang = $this->grav['language'];
         $api = new Customer();
+        $response = null;
 
         try {
-            $api::deleteSource($id, $card);
+            $response = $api::deleteSource($id, $card);
         }
         catch (Card $e) {
 
@@ -115,8 +116,9 @@ class Customers
         }
 
         return $json_response = [
-            'status'  => 'success',
-            'message' => $lang->translate('PLUGIN_SQUIDCART.CARDS.DELETE_SUCCESS')
+            'status'   => 'success',
+            'message'  => $lang->translate('PLUGIN_SQUIDCART.CARDS.DELETE_SUCCESS'),
+            'response' => $response
         ];
     }
 }

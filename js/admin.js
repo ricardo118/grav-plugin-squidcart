@@ -71,26 +71,41 @@ $(document).ready(function () {
         const href = target.attr('href');
         const data = target.data();
         const action = target.data('action');
+        const icon = target.find('.fa');
         let url = `${href}/action:squidcart.${action}/`;
         delete data.action;
+
+        icon.addClass('fa-spinner');
 
         $.each(data, function (key, val) {
             const param = `${key}:${val}/`;
             url = url + param;
         });
-
         console.log(url);
         $.ajax({
             url: url,
         }).done(function(data) {
-           console.log(data);
+            showActionModal(data);
+            updateHTML(action, target);
         }).fail(function(data) {
-            alert(data);
+            showActionModal(data);
+        }).complete(function () {
+            icon.removeClass('fa-spinner');
         });
     });
 
+    $('[data-modal-dismiss]').on('click', function (e) {
+        const wrapper = $(this).closest('.modal-action-wrapper');
+        const modal = wrapper.find('.modal');
 
-    window.showActionModal = function showActionModal(data) {
+        modal.addClass('slideOutDown');
+        setTimeout(function(){
+            wrapper.addClass('hide');
+            modal.removeClass('slideOutDown');
+        }, 700);
+    });
+
+    function showActionModal(data) {
         const wrapper = $('.modal-action-wrapper');
         const modal = wrapper.find('.modal');
         const modal_body = modal.find('[data-modal-message]');
@@ -103,21 +118,27 @@ $(document).ready(function () {
                 modal.addClass('slideOutDown');
                 setTimeout(function(){
                     wrapper.addClass('hide');
+                    modal.removeClass('slideOutDown');
                 }, 700);
-            }, 2000);
+            }, 4000);
         }
     }
 
-    $('[data-modal-dismiss]').on('click', function (e) {
-        const wrapper = $(this).closest('.modal-action-wrapper');
-        const modal = wrapper.find('.modal');
+    function updateHTML(data_action, target) {
+        const action = data_action.split('.')[0];
 
-        modal.addClass('slideOutDown');
-        setTimeout(function(){
-            wrapper.addClass('hide');
-        }, 700);
-    });
-
+        switch (action) {
+            case 'delete':
+                target.closest('[data-action-delete]').remove();
+                break;
+            case 'edit':
+                console.log('updated');
+                break;
+            default:
+                console.log(action);
+                break;
+        }
+    }
 });
 
 

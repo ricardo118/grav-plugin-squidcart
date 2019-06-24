@@ -7,7 +7,7 @@
                 <table>
                     <tbody>
                     {% for card in customer.sources.data %}
-                        <tr>
+                        <tr data-action-delete>
                             <td class="expandable shrink"><i class="fa fa-chevron-right"></i></td>
                             <td class=""><div class="squidcart-icon {{ card.brand|hyphenize }}"></div></td>
                             <td class="spacing">•••• {{ card.last4 }}</td>

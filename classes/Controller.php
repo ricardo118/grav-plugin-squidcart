@@ -185,7 +185,6 @@ class Controller
                 {
                     switch ($this->subaction) {
                         case 'sources':
-                            // $result = $customers->deleteSource($this->params['customers'], $this->params['card']);
                             $result = $customers->deleteSource($this->params['customers'], $this->params['card']);
 
                             $this->sendJsonResponse($result, 200);
