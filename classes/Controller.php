@@ -7,6 +7,7 @@ use Grav\Common\Language\Language;
 use Grav\Common\Uri;
 use Grav\Common\User\User;
 use Grav\Common\Utils;
+use Grav\Framework\Psr7\Response;
 use RocketTheme\Toolbox\Session\Message;
 use Stripe\Stripe;
 
@@ -152,6 +153,27 @@ class Controller
         return $data;
     }
 
+    /**
+     * Sends JSON response and terminates the call.
+     *
+     * @param array $json
+     * @param int $code
+     */
+    protected function sendJsonResponse(array $json, $code = 200): void
+    {
+        // JSON response.
+        $response = new Response(
+            $code,
+            [
+                'Content-Type' => 'application/json',
+                'Cache-Control' => 'no-cache, no-store, must-revalidate'
+            ],
+            json_encode($json)
+        );
+
+        $this->grav->exit($response);
+    }
+
     protected function taskDelete() {
 
         switch ($this->object)
@@ -163,14 +185,16 @@ class Controller
                 {
                     switch ($this->subaction) {
                         case 'sources':
-                                $customers->deleteSource($this->params['customers'], $this->params['card']);
+                            // $result = $customers->deleteSource($this->params['customers'], $this->params['card']);
+                            $result = $customers->deleteSource($this->params['customers'], $this->params['card']);
+
+                            $this->sendJsonResponse($result, 200);
                             break;
                     }
                 }
                 break;
         }
     }
-
 
     // this function does nothing, currently just for keeping track of routes to be
     protected function adminRoutes()
@@ -195,8 +219,13 @@ class Controller
         ];
 
         $customers = [
-            '/squidcart/customers',
-            '/squidcart/customers/customer:{customer_id}'
+            '/squidcart/customers', // done
+            '/squidcart/customers/customer:{customer_id}' // done
+        ];
+
+        $coupons = [
+          '/squidcart/coupons',
+          '/squidcart/coupons/coupon:{coupon_id}'
         ];
     }
 }

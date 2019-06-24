@@ -1,16 +1,14 @@
 .squidcart {
 
-  .modal-unsaved-wrapper {
-    width: 100%;
-    position: absolute;
+  .modal-unsaved-wrapper, .modal-action-wrapper {
+    position: absolute !important;
     bottom: 100px;
     z-index:99;
-    display:none;
+    left: 50%;
+    transform: translateX(-50%);
 
-    #modal-unsaved {
+    #modal-unsaved, #modal-action {
       background: $content-tabs-bg;
-      max-width: 600px;
-      width: 80%;
       padding: 10px;
       color: $content-header;
       margin: 0 auto;
@@ -30,7 +28,6 @@
         a {
           vertical-align: middle;
           color: $content-text;
-          margin-right: 20px !important;
         }
 
         button {

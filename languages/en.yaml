@@ -52,7 +52,6 @@ PLUGIN_SQUIDCART:
   ACCOUNT_INFO: 'ACCOUNT INFORMATION'
   EMAIL_TO: 'Send emails to'
   METADATA: 'Metadata'
-  CARDS: 'Cards'
   DEFAULT: 'default'
   NO_NAME: '<span style="color:grey">No name provided</span>'
   NUMBER: 'Number'
@@ -73,13 +72,21 @@ PLUGIN_SQUIDCART:
   BILLING: 'Billing'
   EVERY: 'every'
   SEND_INVOICE: 'Send'
+
+  #CARDS
+  CARDS:
+    DELETE_SUCCESS: 'Source successfully deleted.'
+    CARDS: 'Cards'
+
   # GENERAL UI
   BACK: 'back'
   IN_STRIPE: 'view in stripe'
   DETAILS: 'Details'
   _YES: 'Yes'
   _NO: 'No'
-  # COUPONS STRINGS
+  DISMISS: 'Dismiss'
+
+  # COUPONS
   TERMS: 'Terms'
   DISCOUNT: 'discount'
   FOR_MONTHS: 'for %s months'

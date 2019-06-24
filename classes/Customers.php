@@ -19,6 +19,8 @@ class Customers
     protected $grav;
     protected $expiration;
 
+    const ERROR_CODE = 'PLUGIN_SQUIDCART.ERROR.';
+
     /**
      * @param Stripe $stripe
      * @param $configs
@@ -40,7 +42,7 @@ class Customers
             try {
                 $customers = $customer->all($opts);
                 foreach ($customers->autoPagingIterator() as $customer) {
-//                    $data[] = $customer->__toArray(true); // was testing using arrays only, works but has other issues
+//                  $data[] = $customer->__toArray(true); // was testing using arrays only, works but has other issues
                     $data[] = $customer;
                 }
             } catch (Api $e) {
@@ -69,43 +71,52 @@ class Customers
         return $customer;
     }
 
+    protected function clearCache()
+    {
+        $this->cache->delete('squidcart_customers');
+    }
+
     /**
      * @param $id
      * @param $card
-     * @return bool
+     * @return array $result
      */
     public function deleteSource($id, $card)
     {
-        $messages = $this->grav['messages'];
+        $lang = $this->grav['language'];
         $api = new Customer();
 
         try {
             $api::deleteSource($id, $card);
-        } catch (Card $e) {
-            $messages->add($e->getMessage(), 'error');
+        }
+        catch (Card $e) {
+
+            $body = $e->getJsonBody();
             $this->grav['log']->error('plugin.squidcart: '. $e->getMessage());
+
+            return $json_response = [
+                'status'  => 'error',
+                'message' => $lang->translate(self::ERROR_CODE.$body['error']['code'])
+            ];
         }
         catch (InvalidRequest $e) {
+
             $body = $e->getJsonBody();
-            $err  = $body['error'];
-
-            dump('Status is:' . $e->getHttpStatus() . "\n");
-            dump('Type is:' . $err['type'] . "\n");
-            dump('Code is:' . $err['code'] . "\n");
-            // param is '' in this case
-            dump('Param is:' . $err['param'] . "\n");
-            dump('Message is:' . $err['message'] . "\n");
-            $messages->add($e->getMessage(), 'error');
             $this->grav['log']->error('plugin.squidcart: '. $e->getMessage());
+
+            return $json_response = [
+                'status'  => 'error',
+                'message' => $lang->translate(self::ERROR_CODE.$body['error']['code'])
+            ];
         }
-        $this->clearCache();
-        $this->getCustomers();
+        finally {
+            $this->clearCache();
+            $this->getCustomers();
+        }
 
-        return true;
-    }
-
-    protected function clearCache()
-    {
-        $this->cache->delete('squidcart_customers');
+        return $json_response = [
+            'status'  => 'success',
+            'message' => $lang->translate('PLUGIN_SQUIDCART.CARDS.DELETE_SUCCESS')
+        ];
     }
 }

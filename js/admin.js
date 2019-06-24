@@ -65,29 +65,6 @@ $(document).ready(function () {
 
     }
 
-    // var pjax = new Pjax({
-    //     elements: "a", // default is "a[href], form[action]"
-    //     selectors: ["#squidcart-content"],
-    //     switches: {
-    //         "#squidcart-content": Pjax.switches.sideBySide
-    //     },
-    //     switchesOptions: {
-    //         "#squidcart-content": {
-    //             classNames: {
-    //                 remove: "animated",
-    //                 add: "animated",
-    //                 backward: "fadeIn",
-    //                 forward: "fadeOut"
-    //             },
-    //             callbacks: {
-    //                 removeElement: function () {
-    //                     initSortable()
-    //                 }
-    //             }
-    //         }
-    //     }
-    // });
-
     $('[data-action]').on('click', function (e) {
         e.preventDefault();
         const target = $(this);
@@ -106,11 +83,41 @@ $(document).ready(function () {
         $.ajax({
             url: url,
         }).done(function(data) {
-            console.log(data);
+           console.log(data);
         }).fail(function(data) {
             alert(data);
         });
     });
+
+
+    window.showActionModal = function showActionModal(data) {
+        const wrapper = $('.modal-action-wrapper');
+        const modal = wrapper.find('.modal');
+        const modal_body = modal.find('[data-modal-message]');
+
+        wrapper.addClass(data.status).removeClass('hide');
+        modal_body.text(data.message);
+
+        if (data.status === 'success') {
+            setTimeout(function(){
+                modal.addClass('slideOutDown');
+                setTimeout(function(){
+                    wrapper.addClass('hide');
+                }, 700);
+            }, 2000);
+        }
+    }
+
+    $('[data-modal-dismiss]').on('click', function (e) {
+        const wrapper = $(this).closest('.modal-action-wrapper');
+        const modal = wrapper.find('.modal');
+
+        modal.addClass('slideOutDown');
+        setTimeout(function(){
+            wrapper.addClass('hide');
+        }, 700);
+    });
+
 });
 
 

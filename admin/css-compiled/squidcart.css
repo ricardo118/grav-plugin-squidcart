@@ -88,6 +88,8 @@
     background-color: #F6F6F6; }
   .squidcart .separator-right {
     box-shadow: inset -1px 0 #e3e3e3; }
+  .squidcart .hide {
+    display: none !important; }
   .squidcart .m-0 {
     margin: 0 !important; }
   .squidcart .mb-0 {
@@ -264,6 +266,22 @@
   .squidcart .py-20 {
     padding-bottom: 20px !important;
     padding-top: 20px !important; }
+  .squidcart .p-40 {
+    padding: 40px !important; }
+  .squidcart .pb-40 {
+    padding-bottom: 40px !important; }
+  .squidcart .pl-40 {
+    padding-left: 40px !important; }
+  .squidcart .pr-40 {
+    padding-right: 40px !important; }
+  .squidcart .pt-40 {
+    padding-top: 40px !important; }
+  .squidcart .px-40 {
+    padding-left: 40px !important;
+    padding-right: 40px !important; }
+  .squidcart .py-40 {
+    padding-bottom: 40px !important;
+    padding-top: 40px !important; }
 @keyframes slideInUp {
   from {
     transform: translate3d(0, 100px, 0);
@@ -351,16 +369,14 @@
 .squidcart .badge.canceled {
   background-color: #FF4136; }
 
-.squidcart .modal-unsaved-wrapper {
-  width: 100%;
-  position: absolute;
+.squidcart .modal-unsaved-wrapper, .squidcart .modal-action-wrapper {
+  position: absolute !important;
   bottom: 100px;
   z-index: 99;
-  display: none; }
-  .squidcart .modal-unsaved-wrapper #modal-unsaved {
+  left: 50%;
+  transform: translateX(-50%); }
+  .squidcart .modal-unsaved-wrapper #modal-unsaved, .squidcart .modal-unsaved-wrapper #modal-action, .squidcart .modal-action-wrapper #modal-unsaved, .squidcart .modal-action-wrapper #modal-action {
     background: #e3e3e3;
-    max-width: 600px;
-    width: 80%;
     padding: 10px;
     color: #414147;
     margin: 0 auto;
@@ -381,22 +397,21 @@
     animation-fill-mode: both;
     /* this prevents the animation from restarting! */
     border: 1px solid black; }
-    .squidcart .modal-unsaved-wrapper #modal-unsaved p {
+    .squidcart .modal-unsaved-wrapper #modal-unsaved p, .squidcart .modal-unsaved-wrapper #modal-action p, .squidcart .modal-action-wrapper #modal-unsaved p, .squidcart .modal-action-wrapper #modal-action p {
       display: inline-block;
       font-weight: bold; }
-    .squidcart .modal-unsaved-wrapper #modal-unsaved .actions {
+    .squidcart .modal-unsaved-wrapper #modal-unsaved .actions, .squidcart .modal-unsaved-wrapper #modal-action .actions, .squidcart .modal-action-wrapper #modal-unsaved .actions, .squidcart .modal-action-wrapper #modal-action .actions {
       display: inline-block;
       float: right; }
-      .squidcart .modal-unsaved-wrapper #modal-unsaved .actions a {
+      .squidcart .modal-unsaved-wrapper #modal-unsaved .actions a, .squidcart .modal-unsaved-wrapper #modal-action .actions a, .squidcart .modal-action-wrapper #modal-unsaved .actions a, .squidcart .modal-action-wrapper #modal-action .actions a {
         vertical-align: middle;
-        color: #6f7b8a;
-        margin-right: 20px !important; }
-      .squidcart .modal-unsaved-wrapper #modal-unsaved .actions button {
+        color: #6f7b8a; }
+      .squidcart .modal-unsaved-wrapper #modal-unsaved .actions button, .squidcart .modal-unsaved-wrapper #modal-action .actions button, .squidcart .modal-action-wrapper #modal-unsaved .actions button, .squidcart .modal-action-wrapper #modal-action .actions button {
         background-color: #06A599;
         color: white;
         padding-left: 12px !important;
         padding-right: 12px !important; }
-    .squidcart .modal-unsaved-wrapper #modal-unsaved.shake {
+    .squidcart .modal-unsaved-wrapper #modal-unsaved.shake, .squidcart .modal-unsaved-wrapper #modal-action.shake, .squidcart .modal-action-wrapper #modal-unsaved.shake, .squidcart .modal-action-wrapper #modal-action.shake {
       -webkit-animation-delay: 0;
       -webkit-animation-duration: 0.7s;
       -webkit-animation-name: shake;
@@ -412,7 +427,7 @@
       animation-name: shake;
       animation-fill-mode: both;
       /* this prevents the animation from restarting! */ }
-    .squidcart .modal-unsaved-wrapper #modal-unsaved.slideOutDown {
+    .squidcart .modal-unsaved-wrapper #modal-unsaved.slideOutDown, .squidcart .modal-unsaved-wrapper #modal-action.slideOutDown, .squidcart .modal-action-wrapper #modal-unsaved.slideOutDown, .squidcart .modal-action-wrapper #modal-action.slideOutDown {
       -webkit-animation-delay: 0;
       -webkit-animation-duration: 0.7s;
       -webkit-animation-name: slideOutDown;
